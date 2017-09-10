@@ -13,4 +13,8 @@ Most features are not yet implemented.
 
 ## Provisional URL
 
-https://poefy.herokuapp.com/
+~~https://poefy.herokuapp.com/~~
+
+Oops, can't use SQLite on Heroku.
+
+This project on hold till I add Postgres to poefy.
