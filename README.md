@@ -13,4 +13,4 @@ Most features are not yet implemented.
 
 ## Provisional URL
 
-poefy.herokuapp.com
+https://poefy.herokuapp.com/
