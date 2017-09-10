@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8"></meta>
+  <title>Poefy Online</title>
+  <script src="https://tilde.town/~nossidge/jquery/src/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://tilde.town/~nossidge/zelda/holy_grail.css" rel="stylesheet">
+  <script language="javascript">
+
+    var desc_databases = <%= @desc_databases %>;
+
+    // Get the poem from the JSON request.
+    function getPoem() {
+      let db   = document.getElementById("dropdown_databases").value;
+      let form = document.getElementById("dropdown_poetic_forms").value;
+      $.getJSON(`poem/${db}/${form}`, function(data) {
+        console.log();
+        if (data.length != 0) {
+          let poem = data.join("<br>").replace(/ /g, "&nbsp;");
+          $("#poem_results").html(poem);
+        } else {
+          $("#poem_results").html("[A poem cannot be generated using the selected criteria]");
+        }
+      });
+    }
+
+    // Update the database description.
+    function selectDatabase(database) {
+      $("#database_desc").text(desc_databases[database]);
+      getPoem();
+    }
+
+    // Onload, select 'shakespeare' and 'sonnet'.
+    $(document).ready(function() {
+      let elem = document.getElementById("dropdown_databases");
+      elem.selectedIndex = 1;
+      $("#database_desc").text(desc_databases[elem.value]);
+      document.getElementById("dropdown_poetic_forms").selectedIndex = 4;
+    });
+
+  </script>
+  <style type="text/css">
+    body {
+      min-height: 100vh;
+    }
+    input {
+      text-align: center;
+    }
+    .header_div {
+      margin: 10px;
+    }
+    .header_left {
+      flex: 0 0 256px;
+      margin-top: 0px;
+      margin-left: 0px;
+    }
+    .header_right {
+      flex: 0 0 614px;
+      margin-left: 8px;
+      margin-right: 0px;
+      display: flex;
+    }
+    #text_counter {
+      width: 130px;
+      margin-left: 8px;
+    }
+    .top_button {
+      width: 100px;
+    }
+    .col_left {
+      flex: 0 0 20em;
+    }
+    .col_middle {
+      background-color: white;
+      padding: 0px;
+    }
+    #save {
+      margin: 0px 0px 5px 0px;
+    }
+    .btn_tags {
+      height: 44px;
+    }
+    #poem_results {
+      font-size: 120%;
+      margin: 12px;
+    }
+    #database_desc{
+      font-size: 200%;
+    }
+    .header_title {
+      text-align: left;
+      margin-top: 4px;
+      margin-left: 24px;
+    }
+  </style>
+ </head>
+ <body class="border">
+  <header class="border">
+    <div class="header_div">
+      <div class="header_title input-group-lg">
+        <span id="database_desc"></span>
+      </div>
+      <div class="header_left">
+        <select id="dropdown_databases" class="form-control input-lg"
+                onchange="selectDatabase(this.value)">
+          <% @all_databases.each do |i| %>
+            <option value="<%= i %>"><%= i %></option>
+          <% end %>
+        </select>
+      </div>
+      <div class="header_right">
+      </div>
+    </div>
+  </header>
+  <div class="contents">
+    <div id="col_left" class="col_left border">
+      <div id="col_left_content">
+        <a class="btn btn-default btn-lg btn-block btn_tags"
+            title="Generate new poem" onclick="getPoem()">
+          <span id="save_glyphicon" class="glyphicon glyphicon-refresh"></span>
+        </a>
+        <br>
+        <p>Poetic form:</p>
+        <select id="dropdown_poetic_forms" class="form-control input-lg"
+                onchange="getPoem()">
+          <% @poetic_forms.each do |i| %>
+            <option value="<%= i %>"><%= i %></option>
+          <% end %>
+        </select>
+        <!--
+          Future input
+          <div>
+            <p>Rhyme scheme</p>
+            <input id="text_counter"
+                   type="text"
+                   class="form-control input-lg"
+            />
+            <p>Indentation</p>
+            <p>Syllable</p>
+            <p>Regex</p>
+            <p>Acrostic</p>
+          </div>
+        -->
+      </div>
+    </div>
+    <div id="col_middle" class="col_middle border" name="poem_frame">
+      <div id="poem_results">
+        <p>Welcome to the online <a href="https://github.com/nossidge/poefy">Poefy</a> generator.</p>
+        <p>Select the corpus database at the top.</p>
+        <p>Then choose from the options on the left.</p>
+        <p>For a new poem, click the 'refresh' button.</p>
+        <p><br>Project currently <a href="https://github.com/nossidge/poefy_online">in progress</a>.</p>
+        <p>Most features are not yet implemented.</p>
+      </div>
+    </div>
+  </div>
+ </body>
+</html>
