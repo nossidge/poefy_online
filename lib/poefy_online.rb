@@ -6,9 +6,10 @@
 # Start the server by running `rackup`.
 ################################################################################
 
-require 'poefy'
 require 'sinatra'
 require 'erb'
+require 'poefy'
+require 'poefy/pg'
 
 require_relative 'poefy_online/version.rb'
 
@@ -20,23 +21,9 @@ module PoefyOnline
 
     # Home page, index.html
     get '/' do
-
-      # ToDo: These should have nicer methods, like the below:
-      # @poetic_forms = Poefy.all_poetic_forms
-      # @all_databases = Poefy.all_databases
-      @poetic_forms = Poefy::PoeticForms::POETIC_FORMS.keys.reject { |i| i == :default }
-      @all_databases = Poefy.all_databases - ['test']
-
-      # ToDo: This shouldn't be hard-coded.
-      # There should be some configuration option in the base poefy gem.
-      @desc_databases = {
-        "dickinson"   => "Emily Dickinson",
-        "shakespeare" => "Shakespeare's sonnets",
-        "spoke"       => "English As She Is Spoke",
-        "therese"     => "St. Thérèse of Lisieux",
-        "whitman"     => "Walt Whitman, Leaves of Grass"
-      }.to_json
-
+      @all_databases  = Poefy.databases.sort
+      @poetic_forms   = Poefy.poetic_forms
+      @desc_databases = Poefy::Database.list_with_desc.to_h.to_json
       erb :index
     end
 
@@ -48,6 +35,10 @@ module PoefyOnline
       JSON (poem || [])
     end
 
+  end
+
+  def self.start_server
+    SinatraApp.run!
   end
 
 end
