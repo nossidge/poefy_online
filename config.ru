@@ -1,2 +1,2 @@
 require_relative 'lib/poefy_online'
-run PoefyOnline::SinatraApp.new
+run PoefyOnline::PoefyApp.new

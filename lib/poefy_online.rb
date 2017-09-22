@@ -17,7 +17,7 @@ require_relative 'poefy_online/version.rb'
 
 module PoefyOnline
 
-  class SinatraApp < Sinatra::Base
+  class PoefyApp < Sinatra::Base
 
     # Home page, index.html
     get '/' do
@@ -38,7 +38,7 @@ module PoefyOnline
   end
 
   def self.start_server
-    SinatraApp.run!
+    PoefyApp.run!
   end
 
 end
