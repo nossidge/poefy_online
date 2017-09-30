@@ -40,13 +40,23 @@
       document.getElementById("dropdown_poetic_forms").selectedIndex = 4;
     });
 
+    // Toggle between named form and bespoke rhyme string.
+    function togglePoemType() {
+      $("#poetic_form").toggleClass("active");
+      $("#poetic_form_glyphicon").toggleClass("glyphicon-ok");
+      $("#poetic_form_glyphicon").toggleClass("glyphicon-remove");
+      $("#rhyme").toggleClass("active");
+      $("#rhyme_glyphicon").toggleClass("glyphicon-ok");
+      $("#rhyme_glyphicon").toggleClass("glyphicon-remove");
+    }
+
   </script>
   <style type="text/css">
     body {
       min-height: 100vh;
     }
     input {
-      text-align: center;
+      text-align: left;
     }
     .header_div {
       margin: 10px;
@@ -61,10 +71,6 @@
       margin-left: 8px;
       margin-right: 0px;
       display: flex;
-    }
-    #text_counter {
-      width: 130px;
-      margin-left: 8px;
     }
     .top_button {
       width: 100px;
@@ -123,20 +129,30 @@
         </a>
         <br>
         <p>Poetic form:</p>
-        <select id="dropdown_poetic_forms" class="form-control input-lg"
-                onchange="getPoem()">
-          <% @poetic_forms.each do |i| %>
-            <option value="<%= i %>"><%= i %></option>
-          <% end %>
-        </select>
+        <div class="input-group">
+          <a id="poetic_form" title="Toggle" onclick="togglePoemType();"
+              class="input-group-addon btn btn-default btn-lg btn-block btn_tags active">
+            <span id="poetic_form_glyphicon" class="glyphicon glyphicon-ok"></span>
+          </a>
+          <select id="dropdown_poetic_forms" class="form-control input-lg"
+                  onchange="getPoem()">
+            <% @poetic_forms.each do |i| %>
+              <option value="<%= i %>"><%= i %></option>
+            <% end %>
+          </select>
+        </div>
+        <br>
+        <p>Rhyme scheme</p>
+        <div class="input-group">
+          <a id="rhyme" title="Toggle" onclick="togglePoemType();"
+              class="input-group-addon btn btn-default btn-lg btn-block btn_tags">
+            <span id="rhyme_glyphicon" class="glyphicon glyphicon-remove"></span>
+          </a>
+          <input id="text_rhyme" type="text" class="form-control input-lg" />
+        </div>
         <!--
           Future input
           <div>
-            <p>Rhyme scheme</p>
-            <input id="text_counter"
-                   type="text"
-                   class="form-control input-lg"
-            />
             <p>Indentation</p>
             <p>Syllable</p>
             <p>Regex</p>
@@ -151,7 +167,8 @@
         <p>Select the corpus database at the top.</p>
         <p>Then choose from the options on the left.</p>
         <p>For a new poem, click the 'refresh' button.</p>
-        <p><br>Project currently <a href="https://github.com/nossidge/poefy_online">in progress</a>.</p>
+        <br>
+        <p>Project currently <a href="https://github.com/nossidge/poefy_online">in progress</a>.</p>
         <p>Most features are not yet implemented.</p>
       </div>
     </div>
