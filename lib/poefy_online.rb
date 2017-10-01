@@ -11,8 +11,6 @@ require 'erb'
 require 'poefy'
 require 'poefy/pg'
 
-require_relative 'poefy_online/version.rb'
-
 ################################################################################
 
 module PoefyOnline
@@ -28,11 +26,29 @@ module PoefyOnline
     end
 
     # Generate a poem using the given inputs.
-    # Return as a JSON object.
-    get '/poem/:database/:poetic_form' do
-      poefy = Poefy::PoefyGen.new params['database']
-      poem = poefy.poem({ form: params['poetic_form'] })
-      JSON (poem || [])
+    get '/poem' do
+      corpus    = params['corpus']
+      form      = params['form']
+      rhyme     = params['rhyme']
+      indent    = params['indent']
+      syllable  = params['syllable']
+      regex     = params['regex']
+      acrostic  = params['acrostic']
+      transform = params['transform']
+
+      # Create options hash.
+      options = {}
+      options[:form]      = form      if form
+      options[:rhyme]     = rhyme     if rhyme
+      options[:indent]    = indent    if indent
+      options[:syllable]  = syllable  if syllable
+      options[:regex]     = regex     if regex
+      options[:acrostic]  = acrostic  if acrostic
+      options[:transform] = transform if transform
+
+      # Return poem as a JSON object.
+      poefy = Poefy::Poem.new(corpus, options)
+      JSON (poefy.poem || [])
     end
 
   end

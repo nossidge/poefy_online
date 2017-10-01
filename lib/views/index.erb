@@ -13,10 +13,25 @@
 
     // Get the poem from the JSON request.
     function getPoem() {
-      let db   = document.getElementById("dropdown_databases").value;
-      let form = document.getElementById("dropdown_poetic_forms").value;
-      $.getJSON(`poem/${db}/${form}`, function(data) {
-        console.log();
+      let corpus = document.getElementById("dropdown_databases").value;
+      let form   = document.getElementById("dropdown_poetic_forms").value;
+      let rhyme  = document.getElementById("text_rhyme").value;
+
+      // Create options object.
+      let options = {};
+      options.corpus = corpus;
+
+      // If we aren't using the form, we are using the rhyme string.
+      let use_form = $("#poetic_form").hasClass("active");
+      if (use_form) {
+        options.form = form;
+      } else {
+        options.rhyme = rhyme;
+      }
+
+      // Serialise the object to URL parameters.
+      // Write response to the main div.
+      $.getJSON("poem?" + $.param(options), function(data) {
         if (data.length != 0) {
           let poem = data.join("<br>").replace(/ /g, "&nbsp;");
           $("#poem_results").html(poem);
@@ -26,19 +41,12 @@
       });
     }
 
-    // Update the database description.
+    // Display the corpus description.
     function selectDatabase(database) {
+      document.getElementById("dropdown_databases").value = database;
       $("#database_desc").text(desc_databases[database]);
       getPoem();
     }
-
-    // Onload, select 'shakespeare' and 'sonnet'.
-    $(document).ready(function() {
-      let elem = document.getElementById("dropdown_databases");
-      elem.selectedIndex = 1;
-      $("#database_desc").text(desc_databases[elem.value]);
-      document.getElementById("dropdown_poetic_forms").selectedIndex = 4;
-    });
 
     // Toggle between named form and bespoke rhyme string.
     function togglePoemType() {
@@ -49,7 +57,23 @@
       $("#rhyme_glyphicon").toggleClass("glyphicon-ok");
       $("#rhyme_glyphicon").toggleClass("glyphicon-remove");
     }
+    function setPoemTypePoeticForm() {
+      if ( !$("#poetic_form").hasClass("active") ) togglePoemType();
+    }
+    function setPoemTypeRhyme() {
+      if ( !$("#rhyme").hasClass("active") ) togglePoemType();
+    }
 
+    // Onload, select 'shakespeare' and 'sonnet'.
+    // Set up listeners for the toggle-able inputs.
+    $(document).ready(function() {
+      let elem = document.getElementById("dropdown_databases");
+      elem.value = "shakespeare";
+      $("#database_desc").text(desc_databases[elem.value]);
+      document.getElementById("dropdown_poetic_forms").value = "sonnet";
+      $("#dropdown_poetic_forms").focus(setPoemTypePoeticForm);
+      $("#text_rhyme").focus(setPoemTypeRhyme);
+    });
   </script>
   <style type="text/css">
     body {
@@ -70,7 +94,6 @@
       flex: 0 0 614px;
       margin-left: 8px;
       margin-right: 0px;
-      display: flex;
     }
     .top_button {
       width: 100px;
@@ -117,6 +140,12 @@
         </select>
       </div>
       <div class="header_right">
+        <a class="btn btn-default btn-lg" title="Fork me on GitHub"
+            href="https://github.com/nossidge/poefy_online">
+          <svg viewBox="0 0 16 15" width="22" height="18">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+        </a>
       </div>
     </div>
   </header>
