@@ -13,9 +13,13 @@
 
     // Get the poem from the JSON request.
     function getPoem() {
-      let corpus = document.getElementById("dropdown_databases").value;
-      let form   = document.getElementById("dropdown_poetic_forms").value;
-      let rhyme  = document.getElementById("text_rhyme").value;
+      let corpus   = document.getElementById("dropdown_databases").value;
+      let form     = document.getElementById("dropdown_poetic_forms").value;
+      let rhyme    = document.getElementById("text_rhyme").value;
+      let indent   = document.getElementById("text_indent").value;
+      let syllable = document.getElementById("text_syllable").value;
+      let regex    = document.getElementById("text_regex").value;
+      let acrostic = document.getElementById("text_acrostic").value;
 
       // Create options object.
       let options = {};
@@ -28,6 +32,12 @@
       } else {
         options.rhyme = rhyme;
       }
+
+      // Add optional attributes.
+      if (indent   != "") options.indent   = indent;
+      if (syllable != "") options.syllable = syllable;
+      if (regex    != "") options.regex    = regex;
+      if (acrostic != "") options.acrostic = acrostic;
 
       // Serialise the object to URL parameters.
       // Write response to the main div.
@@ -91,7 +101,7 @@
       margin-left: 0px;
     }
     .header_right {
-      flex: 0 0 614px;
+      flex: 0 0 44px;
       margin-left: 8px;
       margin-right: 0px;
     }
@@ -100,6 +110,7 @@
     }
     .col_left {
       flex: 0 0 20em;
+      min-height: 358px;
     }
     .col_middle {
       background-color: white;
@@ -157,7 +168,7 @@
           <span id="save_glyphicon" class="glyphicon glyphicon-refresh"></span>
         </a>
         <br>
-        <p>Poetic form:</p>
+        <p>Poetic form</p>
         <div class="input-group">
           <a id="poetic_form" title="Toggle" onclick="togglePoemType();"
               class="input-group-addon btn btn-default btn-lg btn-block btn_tags active">
@@ -179,15 +190,26 @@
           </a>
           <input id="text_rhyme" type="text" class="form-control input-lg" />
         </div>
-        <!--
-          Future input
-          <div>
-            <p>Indentation</p>
-            <p>Syllable</p>
-            <p>Regex</p>
-            <p>Acrostic</p>
-          </div>
-        -->
+        <br>
+        <p>Indentation</p>
+        <div class="btn-block">
+          <input id="text_indent" type="text" class="form-control input-lg" />
+        </div>
+        <br>
+        <p>Syllables</p>
+        <div class="btn-block">
+          <input id="text_syllable" type="text" class="form-control input-lg" />
+        </div>
+        <br>
+        <p>Regex</p>
+        <div class="btn-block">
+          <input id="text_regex" type="text" class="form-control input-lg" />
+        </div>
+        <br>
+        <p>Acrostic</p>
+        <div class="btn-block">
+          <input id="text_acrostic" type="text" class="form-control input-lg" />
+        </div>
       </div>
     </div>
     <div id="col_middle" class="col_middle border" name="poem_frame">
