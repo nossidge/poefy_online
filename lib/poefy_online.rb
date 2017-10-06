@@ -119,7 +119,9 @@ module PoefyOnline
 
       # Return poem as a JSON object.
       poefy = Poefy::Poem.new(corpus, options)
-      JSON (poefy.poem || [])
+      poem = poefy.poem
+      poefy.close
+      JSON (poem || [])
     end
 
   end
