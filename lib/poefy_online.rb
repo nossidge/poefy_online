@@ -46,6 +46,44 @@ end
 
 ################################################################################
 
+# Create corpora from the text files included with the repository.
+# Exclude all lines which do not contain lowercase letters.
+def make_db database, textfile, description
+  file  = Poefy.root + '/data/' + textfile
+  input = File.readlines(file).keep_if { |i| i =~ /[a-z]/ }
+  poefy = Poefy::Poem.new database
+  poefy.make_database! input, description
+  poefy.close
+end
+
+[
+  [
+    'shakespeare',
+    'shakespeare_sonnets.txt',
+    "Shakespeare's sonnets"
+  ],[
+    'therese',
+    'st_therese_of_lisieux.txt',
+    "St. Thérèse of Lisieux"
+  ],[
+    'whitman',
+    'whitman_leaves.txt',
+    "Walt Whitman, Leaves of Grass"
+  ],[
+    'dickinson',
+    'emily_dickinson.txt',
+    "Emily Dickinson"
+  ],[
+    'spoke',
+    'english_as_she_is_spoke.txt',
+    "English As She Is Spoke"
+  ]
+].each do |i|
+  make_db(*i)
+end
+
+################################################################################
+
 module PoefyOnline
 
   class PoefyApp < Sinatra::Base
