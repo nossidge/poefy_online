@@ -134,6 +134,50 @@
       margin-top: 4px;
       margin-left: 24px;
     }
+    .poem_option p {
+      float: left;
+    }
+    .tiny_hover_buttons {
+      float: right;
+    }
+
+    /*
+    Hover effect nabbed from here (class is 'the-icons')
+    http://www.plugolabs.com/twitter-bootstrap-button-generator/
+    */
+    .tiny_hover_buttons a {
+      text-decoration: none;
+      color: black;
+      width: 20px;
+      height: 20px;
+      padding: 0px 0px 0px 6px;
+      float: left;
+      -moz-transition: all 0.15s ease-in-out;
+      -webkit-transition: all 0.15s ease-in-out;
+      -o-transition: all 0.15s ease-in-out;
+      transition: all 0.15s ease-in-out;
+    }
+    .tiny_hover_buttons a:hover, .tiny_hover_buttons a.active {
+      -webkit-box-shadow:
+        0 0 3px #c8c8c8,
+        transparent 0 0 0,
+        transparent 0 0 0,
+        transparent 0 0 0,
+        transparent 0 0 0;
+      -moz-box-shadow:
+        0 0 3px #c8c8c8,
+        transparent 0 0 0,
+        transparent 0 0 0,
+        transparent 0 0 0,
+        transparent 0 0 0;
+      box-shadow:
+        0 0 3px #c8c8c8,
+        transparent 0 0 0,
+        transparent 0 0 0,
+        transparent 0 0 0,
+        transparent 0 0 0;
+      background: #fff;
+    }
   </style>
  </head>
  <body class="border">
@@ -191,9 +235,15 @@
           <input id="text_rhyme" type="text" class="form-control input-lg" />
         </div>
         <br>
-        <p>Indentation</p>
-        <div class="btn-block">
-          <input id="text_indent" type="text" class="form-control input-lg" />
+        <div class="poem_option">
+          <p>Indentation</p>
+          <span class="tiny_hover_buttons">
+            <a href="#" title="Randomise">!</a>
+            <a href="#" title="Display help">?</a>
+          </span>
+          <div class="btn-block">
+            <input id="text_indent" type="text" class="form-control input-lg" />
+          </div>
         </div>
         <br>
         <p>Syllables</p>
