@@ -52,7 +52,8 @@ build/
 desktop.ini
 .agignore
 .ignore
-.lnk
+*.lnk
+*.url
 
 ################################################################################
 # App specific files
