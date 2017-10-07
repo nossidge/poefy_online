@@ -91,8 +91,9 @@ module PoefyOnline
     # Home page, index.html
     get '/' do
       @all_databases  = Poefy.databases.sort
-      @poetic_forms   = Poefy.poetic_forms
-      @desc_databases = Poefy::Database.list_with_desc.to_h.to_json
+      @poetic_forms   = Poefy::PoeticForms::POETIC_FORMS
+      @poetic_forms.delete(:default)
+      @desc_databases = Poefy::Database.list_with_desc
       erb :index
     end
 

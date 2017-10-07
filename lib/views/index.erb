@@ -9,8 +9,9 @@
   <link href="https://tilde.town/~nossidge/zelda/holy_grail.css" rel="stylesheet">
   <script language="javascript">
 
-    var desc_databases = <%= @desc_databases %>;
     var welcomeText;
+    var desc_databases = <%= @desc_databases.to_json %>;
+    var poetic_forms   = <%= @poetic_forms.to_json %>;
 
     // Get the poem from the JSON request.
     function getPoem() {
@@ -229,7 +230,7 @@
           </a>
           <select id="dropdown_poetic_forms" class="form-control input-lg"
                   onchange="getPoem()">
-            <% @poetic_forms.each do |i| %>
+            <% @poetic_forms.keys.each do |i| %>
               <option value="<%= i %>"><%= i %></option>
             <% end %>
           </select>
