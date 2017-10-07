@@ -10,6 +10,7 @@
   <script language="javascript">
 
     var desc_databases = <%= @desc_databases %>;
+    var welcomeText;
 
     // Get the poem from the JSON request.
     function getPoem() {
@@ -74,9 +75,16 @@
       if ( !$("#rhyme").hasClass("active") ) togglePoemType();
     }
 
+    // Show help text for a specific poem option.
+    function helpText(helpTextID) {
+      $("#poem_results").html(welcomeText);
+      $("#" + helpTextID).toggleClass("hidden");
+    }
+
     // Onload, select 'shakespeare' and 'sonnet'.
     // Set up listeners for the toggle-able inputs.
     $(document).ready(function() {
+      welcomeText = $("#poem_results").html();
       let elem = document.getElementById("dropdown_databases");
       elem.value = "shakespeare";
       $("#database_desc").text(desc_databases[elem.value]);
@@ -133,6 +141,9 @@
       text-align: left;
       margin-top: 4px;
       margin-left: 24px;
+    }
+    h3 {
+      margin-top: 35px;
     }
     .poem_option p {
       float: left;
@@ -239,7 +250,7 @@
           <p>Indentation</p>
           <span class="tiny_hover_buttons">
             <a href="#" title="Randomise">!</a>
-            <a href="#" title="Display help">?</a>
+            <a href="#" onclick="helpText('help_indentation')" title="Display help">?</a>
           </span>
           <div class="btn-block">
             <input id="text_indent" type="text" class="form-control input-lg" />
@@ -271,6 +282,22 @@
         <br>
         <p>Project currently <a href="https://github.com/nossidge/poefy_online">in progress</a>.</p>
         <p>Most features are not yet implemented.</p>
+        <div id="help_indentation" class="hidden">
+          <h3>Indentation</h3>
+          <p>Indent each line by a certain number of spaces.</p>
+          <pre>Corpus:        shakespeare
+Rhyme scheme:  abab aabb
+Indentation:   0101 0012</pre>
+          <pre>O! what a mansion have those vices got
+&nbsp;&nbsp;And more, much more, than in my verse can sit,
+Nay, if you read this line, remember not
+&nbsp;&nbsp;For whether beauty, birth, or wealth, or wit,
+
+But what's so blessed-fair that fears no blot?
+Why should my heart think that a several plot,
+&nbsp;&nbsp;Thy merit hath my duty strongly knit,
+&nbsp;&nbsp;&nbsp;&nbsp;Your own glass shows you when you look in it.</pre>
+        </div>
       </div>
     </div>
   </div>
