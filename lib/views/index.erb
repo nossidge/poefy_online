@@ -85,6 +85,7 @@
     // Set up listeners for the toggle-able inputs.
     $(document).ready(function() {
       welcomeText = $("#poem_results").html();
+      $("#welcome_text").toggleClass("hidden");
       let elem = document.getElementById("dropdown_databases");
       elem.value = "shakespeare";
       $("#database_desc").text(desc_databases[elem.value]);
@@ -141,9 +142,6 @@
       text-align: left;
       margin-top: 4px;
       margin-left: 24px;
-    }
-    h3 {
-      margin-top: 35px;
     }
     .poem_option p {
       float: left;
@@ -257,9 +255,15 @@
           </div>
         </div>
         <br>
-        <p>Syllables</p>
-        <div class="btn-block">
-          <input id="text_syllable" type="text" class="form-control input-lg" />
+        <div class="poem_option">
+          <p>Syllables</p>
+          <span class="tiny_hover_buttons">
+            <a href="#" title="Randomise">!</a>
+            <a href="#" onclick="helpText('help_syllables')" title="Display help">?</a>
+          </span>
+          <div class="btn-block">
+            <input id="text_syllable" type="text" class="form-control input-lg" />
+          </div>
         </div>
         <br>
         <p>Regex</p>
@@ -275,20 +279,23 @@
     </div>
     <div id="col_middle" class="col_middle border" name="poem_frame">
       <div id="poem_results">
-        <p>Welcome to the online <a href="https://github.com/nossidge/poefy">Poefy</a> generator.</p>
-        <p>Select the corpus database at the top.</p>
-        <p>Then choose from the options on the left.</p>
-        <p>For a new poem, click the 'refresh' button.</p>
-        <br>
-        <p>Project currently <a href="https://github.com/nossidge/poefy_online">in progress</a>.</p>
-        <p>Most features are not yet implemented.</p>
+        <div id="welcome_text" class="hidden">
+          <p>Welcome to the online <a href="https://github.com/nossidge/poefy">Poefy</a> generator.</p>
+          <p>Select the corpus database at the top.</p>
+          <p>Then choose from the options on the left.</p>
+          <p>For a new poem, click the 'refresh' button.</p>
+          <br>
+          <p>Project currently <a href="https://github.com/nossidge/poefy_online">in progress</a>.</p>
+          <p>Most features are not yet implemented.</p>
+        </div>
         <div id="help_indentation" class="hidden">
           <h3>Indentation</h3>
           <p>Indent each line by a certain number of spaces.</p>
           <pre>Corpus:        shakespeare
 Rhyme scheme:  abab aabb
-Indentation:   0101 0012</pre>
-          <pre>O! what a mansion have those vices got
+Indentation:   0101 0012
+
+O! what a mansion have those vices got
 &nbsp;&nbsp;And more, much more, than in my verse can sit,
 Nay, if you read this line, remember not
 &nbsp;&nbsp;For whether beauty, birth, or wealth, or wit,
@@ -297,6 +304,70 @@ But what's so blessed-fair that fears no blot?
 Why should my heart think that a several plot,
 &nbsp;&nbsp;Thy merit hath my duty strongly knit,
 &nbsp;&nbsp;&nbsp;&nbsp;Your own glass shows you when you look in it.</pre>
+        </div>
+        <div id="help_syllables" class="hidden">
+          <h3>Syllables</h3>
+          <p>Specify syllable count allowed for each line. There's a few valid forms it can take.</p>
+          <p>If the string is just one number, all lines will be that number of syllables long.</p>
+          <pre>Corpus:        whitman
+Rhyme scheme:  abab
+Syllables:     6
+
+To One Shortly to Die
+looks at the oats and rye,
+making of those for war,
+By Broad Potomac's Shore
+beautiful than the sky.</pre>
+          <p>If the string is comma delimited, all lines will be any of those numbers of syllables long.</p>
+          <pre>Corpus:        whitman
+Rhyme scheme:  abab
+Syllables:     4,8,12
+
+Signing for Soul and Body, set to them my name,
+When I Peruse the Conquer'd Fame
+He is thinly clothed, he leans forward as he runs,
+Sacred shape of the bearer of daughters and sons,
+On, on ye jocund twain! continue on the same!</pre>
+          <p>If the string is an array encased in [square brackets], each element corresponds to a line in the output.</p>
+          <pre>Corpus:        whitman
+Rhyme scheme:  aabba
+Syllables:     [8,8,5,5,8]
+
+Thus by blue Ontario's shore,
+Give me the pay I have served for,
+refuse, all attend,
+for my dearest friend,
+be the stake, and respite no more.</pre>
+          <p>If the string is a hash encased in {curly brackets}, the key will be used to match the line number. You can use '=>' or ':' as the assignment symbol. Keys of '0' are used as the default value.</p>
+          <pre>Corpus:        whitman
+Rhyme scheme:  aabba
+Syllables:     {0=>8,3=>5,4=>5}
+
+Sail out for Good, Eidolon Yacht!
+A glimpse through an interstice caught,
+Sit a while dear son,
+others for deeds done,
+I know very well I could not.</pre>
+          <p>Values can be an exact integer syllable count, or an array of acceptable counts.</p>
+          <pre>Corpus:        whitman
+Rhyme scheme:  aabba
+Syllables:     {0=>[8,9],3=>[4,5,6],4=>[4,5,6]}
+
+their flesh against me as I sat,
+and not hit, that which I hinted at;
+Poets to Come
+joints proportion'd and plumb.
+To be in any form, what is that?</pre>
+          <p>Keys of negative integers count from the final line backwards.</p>
+          <pre>Corpus:        whitman
+Rhyme scheme:  aabba
+Syllables:     {0:4,-1:20}
+
+To-Day and Thee
+Far, far at sea,
+catching disease.
+toward the knees,
+I believe you are latent with unseen existences, you are so dear to me.</pre>
         </div>
       </div>
     </div>
