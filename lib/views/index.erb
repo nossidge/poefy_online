@@ -28,8 +28,8 @@
       options.corpus = corpus;
 
       // If we aren't using the form, we are using the rhyme string.
-      let use_form = $("#poetic_form").hasClass("active");
-      if (use_form) {
+      let usePoeticForm = $("#poetic_form").hasClass("active");
+      if (usePoeticForm) {
         options.form = form;
       } else {
         options.rhyme = rhyme;
@@ -82,6 +82,48 @@
       $("#" + helpTextID).toggleClass("hidden");
     }
 
+    // Determine whether the rhyme string is valid.
+    // Directly taken from the 'poefy' Ruby gem.
+    function parseRhymeString(rhyme_string) {
+      let tokens = [];
+      let buffer = '';
+
+      // Split string to tokens.
+      $.each( rhyme_string.split(''), function(index, char) {
+        if ( buffer != '' && (isNaN(Number(char)) || (char == ' ')) ) {
+          tokens.push(buffer);
+          buffer = '';
+        }
+        buffer += char;
+      })
+      tokens.push(buffer);
+
+      // Handle invalid tokens.
+      let boolean_array = $.map( tokens, function(char) {
+        keep = char.replace(/[^A-Z,0-9]/g, "");
+        return (keep == "" || !Number(keep));
+      })
+
+      // Not valid if there are any 'false' elements.
+      let valid = boolean_array.reduce( function(sum, i) {
+        return (sum && i);
+      });
+
+      return { array: tokens, valid: valid }
+    }
+
+    // Highlight the rhyme textbox if it's invalid.
+    function highlightInvalidRhyme() {
+      rhymeString = document.getElementById("text_rhyme").value;
+      rhymeParsed = parseRhymeString(rhymeString);
+      let elem = $("#text_rhyme").parent();
+      if (rhymeParsed.valid) {
+        elem.removeClass("has-error");
+      } else {
+        elem.addClass("has-error");
+      }
+    }
+
     // Onload, select 'shakespeare' and 'sonnet'.
     // Set up listeners for the toggle-able inputs.
     $(document).ready(function() {
@@ -93,6 +135,8 @@
       document.getElementById("dropdown_poetic_forms").value = "sonnet";
       $("#dropdown_poetic_forms").focus(setPoemTypePoeticForm);
       $("#text_rhyme").focus(setPoemTypeRhyme);
+      $("#text_rhyme").change(highlightInvalidRhyme);
+      $("#text_rhyme").keyup(highlightInvalidRhyme);
     });
   </script>
   <style type="text/css">
@@ -248,7 +292,7 @@
         <div class="poem_option">
           <p>Indentation</p>
           <span class="tiny_hover_buttons">
-            <a href="#" title="Randomise">!</a>
+            <a href="#" onclick="randomIndentation()" title="Randomise">!</a>
             <a href="#" onclick="helpText('help_indentation')" title="Display help">?</a>
           </span>
           <div class="btn-block">
