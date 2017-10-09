@@ -15,11 +15,14 @@
 
     // Cribbed from https://stackoverflow.com/a/8435261/139299
     function weightedRand(spec) {
-      var i, sum = 0, r = Math.random();
+      let i, sum = 0, r = Math.random();
       for (i in spec) {
         sum += spec[i];
         if (r <= sum) return i;
       }
+    }
+    function sample(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
     }
 
     // Get the poem from the JSON request.
@@ -138,9 +141,11 @@
       }
     }
 
+    // #########################################################################
+
     // Randomise option string based on the rhyme string.
-    function randomIndentation() {
-      let indentString = "";
+    function randomisePoemOption(textboxID) {
+      let outputString = "";
 
       // Get rhyme string from textbox or from poetic form.
       let rhymeString;
@@ -157,8 +162,7 @@
       let rhymeStrings = [].concat(...new Array(rhymeString));
 
       // Select a random rhyme from the array, and use that.
-      let index = Math.floor(Math.random() * rhymeStrings.length);
-      rhymeString = rhymeStrings[index];
+      rhymeString = sample(rhymeStrings);
 
       // Parse to tokens and rhymes.
       let rhymeParsed = parseRhymeString(rhymeString);
@@ -170,25 +174,36 @@
       let empty = (uniques.length == 1 && uniques[0].trim() == "");
       if (rhymeParsed.valid && !empty) {
 
-        // This approach is pretty naive, but it should be okay.
-        // Assign each unique rhyme a weighted, pseudo-random indentation.
-        let weight = {0:0.5, 1:0.4, 2:0.1};
-        let rhymeIndent = {};
-        $.each( uniques, function(index, char) {
-          var output = (char == " ") ? " " : weightedRand(weight);
-          rhymeIndent[char] = output;
-        });
-
-        // Then map it back to the rhyme array.
-        indentString = $.map( rhymeParsed.rhymes, function(char) {
-          return rhymeIndent[char];
-        }).join("");
+        // Randomise a particular option.
+        switch(textboxID) {
+          case "#text_indent":
+            outputString = randomIndentation(rhymeParsed);
+        }
       }
 
       // Write that back to the DOM and generate a new poem.
-      $("#text_indent").val(indentString);
+      $(textboxID).val(outputString);
       getPoem();
     }
+
+    // Randomise the indentation.
+    // This approach is pretty naive, but it should be okay.
+    // Assign each unique rhyme a weighted, pseudo-random indentation.
+    // Then map it back to the rhyme array.
+    function randomIndentation(rhymeParsed) {
+      let uniques = [...new Set(rhymeParsed.rhymes)];
+      let weight = {0:0.5, 1:0.4, 2:0.1};
+      let rhymeIndent = {};
+      $.each( uniques, function(index, char) {
+        let output = (char == " ") ? " " : weightedRand(weight);
+        rhymeIndent[char] = output;
+      });
+      return $.map( rhymeParsed.rhymes, function(char) {
+        return rhymeIndent[char];
+      }).join("");
+    }
+
+    // #########################################################################
 
     // Onload, select 'shakespeare' and 'sonnet'.
     // Set up listeners for the toggle-able inputs.
@@ -357,7 +372,7 @@
         <div class="poem_option">
           <p>Indentation</p>
           <span class="tiny_hover_buttons">
-            <a href="#" onclick="randomIndentation()" title="Randomise">!</a>
+            <a href="#" onclick="randomisePoemOption('#text_indent')" title="Randomise">!</a>
             <a href="#" onclick="helpText('help_indentation')" title="Display help">?</a>
           </span>
           <div class="btn-block">
