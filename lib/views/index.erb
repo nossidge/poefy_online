@@ -13,6 +13,15 @@
     var desc_databases = <%= @desc_databases.to_json %>;
     var poetic_forms   = <%= @poetic_forms.to_json %>;
 
+    // Cribbed from https://stackoverflow.com/a/8435261/139299
+    function weightedRand(spec) {
+      var i, sum = 0, r = Math.random();
+      for (i in spec) {
+        sum += spec[i];
+        if (r <= sum) return i;
+      }
+    }
+
     // Get the poem from the JSON request.
     function getPoem() {
       let corpus   = document.getElementById("dropdown_databases").value;
@@ -109,7 +118,12 @@
         return (sum && i);
       });
 
-      return { array: tokens, valid: valid }
+      // Get the rhyme letter for each token.
+      let rhymes = $.map( tokens, function(char) {
+        return char.toLowerCase().replace(/[^a-z ]/g, "");
+      })
+
+      return { tokens: tokens, rhymes: rhymes, valid: valid }
     }
 
     // Highlight the rhyme textbox if it's invalid.
@@ -122,6 +136,58 @@
       } else {
         elem.addClass("has-error");
       }
+    }
+
+    // Randomise option string based on the rhyme string.
+    function randomIndentation() {
+      let indentString = "";
+
+      // Get rhyme string from textbox or from poetic form.
+      let rhymeString;
+      let usePoeticForm = $("#poetic_form").hasClass("active");
+      if (usePoeticForm) {
+        let form = document.getElementById("dropdown_poetic_forms").value;
+        rhymeString = poetic_forms[form].rhyme;
+      } else {
+        rhymeString = document.getElementById("text_rhyme").value;
+      }
+
+      // Some poetic forms have multiple rhymes to choose from.
+      // So if it's a single string, coerce to flattened array.
+      let rhymeStrings = [].concat(...new Array(rhymeString));
+
+      // Select a random rhyme from the array, and use that.
+      let index = Math.floor(Math.random() * rhymeStrings.length);
+      rhymeString = rhymeStrings[index];
+
+      // Parse to tokens and rhymes.
+      let rhymeParsed = parseRhymeString(rhymeString);
+
+      // Get a list of the unique rhymes.
+      let uniques = [...new Set(rhymeParsed.rhymes)];
+
+      // Don't do anything if the rhyme string is invalid or empty.
+      let empty = (uniques.length == 1 && uniques[0].trim() == "");
+      if (rhymeParsed.valid && !empty) {
+
+        // This approach is pretty naive, but it should be okay.
+        // Assign each unique rhyme a weighted, pseudo-random indentation.
+        let weight = {0:0.5, 1:0.4, 2:0.1};
+        let rhymeIndent = {};
+        $.each(uniques, function(index, char) {
+          var output = (char == " ") ? " " : weightedRand(weight);
+          rhymeIndent[char] = output;
+        });
+
+        // Then map it back to the rhyme array.
+        indentString = $.map( rhymeParsed.rhymes, function(char) {
+          return rhymeIndent[char];
+        }).join("");
+      }
+
+      // Write that back to the DOM and generate a new poem.
+      $("#text_indent").val(indentString);
+      getPoem();
     }
 
     // Onload, select 'shakespeare' and 'sonnet'.
