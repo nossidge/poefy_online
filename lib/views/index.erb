@@ -24,13 +24,13 @@
 
     // Get the poem from the JSON request.
     function getPoem() {
-      let corpus   = document.getElementById("dropdown_databases").value;
-      let form     = document.getElementById("dropdown_poetic_forms").value;
-      let rhyme    = document.getElementById("text_rhyme").value;
-      let indent   = document.getElementById("text_indent").value;
-      let syllable = document.getElementById("text_syllable").value;
-      let regex    = document.getElementById("text_regex").value;
-      let acrostic = document.getElementById("text_acrostic").value;
+      let corpus   = $("#dropdown_databases").val();
+      let form     = $("#dropdown_poetic_forms").val();
+      let rhyme    = $("#text_rhyme").val();
+      let indent   = $("#text_indent").val();
+      let syllable = $("#text_syllable").val();
+      let regex    = $("#text_regex").val();
+      let acrostic = $("#text_acrostic").val();
 
       // Create options object.
       let options = {};
@@ -64,7 +64,7 @@
 
     // Display the corpus description.
     function selectDatabase(database) {
-      document.getElementById("dropdown_databases").value = database;
+      $("#dropdown_databases").val(database);
       $("#database_desc").text(desc_databases[database]);
       getPoem();
     }
@@ -104,14 +104,14 @@
           buffer = '';
         }
         buffer += char;
-      })
+      });
       tokens.push(buffer);
 
       // Handle invalid tokens.
       let boolean_array = $.map( tokens, function(char) {
         keep = char.replace(/[^A-Z,0-9]/g, "");
         return (keep == "" || !Number(keep));
-      })
+      });
 
       // Not valid if there are any 'false' elements.
       let valid = boolean_array.reduce( function(sum, i) {
@@ -121,15 +121,15 @@
       // Get the rhyme letter for each token.
       let rhymes = $.map( tokens, function(char) {
         return char.toLowerCase().replace(/[^a-z ]/g, "");
-      })
+      });
 
-      return { tokens: tokens, rhymes: rhymes, valid: valid }
+      return { tokens: tokens, rhymes: rhymes, valid: valid };
     }
 
     // Highlight the rhyme textbox if it's invalid.
     function highlightInvalidRhyme() {
-      rhymeString = document.getElementById("text_rhyme").value;
-      rhymeParsed = parseRhymeString(rhymeString);
+      let rhymeString = $("#text_rhyme").val();
+      let rhymeParsed = parseRhymeString(rhymeString);
       let elem = $("#text_rhyme").parent();
       if (rhymeParsed.valid) {
         elem.removeClass("has-error");
@@ -146,10 +146,10 @@
       let rhymeString;
       let usePoeticForm = $("#poetic_form").hasClass("active");
       if (usePoeticForm) {
-        let form = document.getElementById("dropdown_poetic_forms").value;
+        let form = $("#dropdown_poetic_forms").val();
         rhymeString = poetic_forms[form].rhyme;
       } else {
-        rhymeString = document.getElementById("text_rhyme").value;
+        rhymeString = $("#text_rhyme").val();
       }
 
       // Some poetic forms have multiple rhymes to choose from.
@@ -174,7 +174,7 @@
         // Assign each unique rhyme a weighted, pseudo-random indentation.
         let weight = {0:0.5, 1:0.4, 2:0.1};
         let rhymeIndent = {};
-        $.each(uniques, function(index, char) {
+        $.each( uniques, function(index, char) {
           var output = (char == " ") ? " " : weightedRand(weight);
           rhymeIndent[char] = output;
         });
@@ -195,10 +195,10 @@
     $(document).ready(function() {
       welcomeText = $("#poem_results").html();
       $("#welcome_text").toggleClass("hidden");
-      let elem = document.getElementById("dropdown_databases");
-      elem.value = "shakespeare";
-      $("#database_desc").text(desc_databases[elem.value]);
-      document.getElementById("dropdown_poetic_forms").value = "sonnet";
+      let corpus = "shakespeare";
+      $("#dropdown_databases").val(corpus);
+      $("#database_desc").text(desc_databases[corpus]);
+      $("#dropdown_poetic_forms").val("sonnet");
       $("#dropdown_poetic_forms").focus(setPoemTypePoeticForm);
       $("#text_rhyme").focus(setPoemTypeRhyme);
       $("#text_rhyme").change(highlightInvalidRhyme);
@@ -216,7 +216,7 @@
       margin: 10px;
     }
     .header_left {
-      flex: 0 0 256px;
+      flex: 0 0 368px;
       margin-top: 0px;
       margin-left: 0px;
     }
@@ -229,24 +229,22 @@
       width: 100px;
     }
     .col_left {
-      flex: 0 0 20em;
+      flex: 0 0 28em;
       min-height: 358px;
     }
     .col_middle {
       background-color: white;
       padding: 0px;
     }
-    #save {
-      margin: 0px 0px 5px 0px;
-    }
     .btn_tags {
+      color: rgb(85,85,85);
       height: 44px;
     }
     #poem_results {
       font-size: 120%;
       margin: 12px;
     }
-    #database_desc{
+    #database_desc {
       font-size: 200%;
     }
     .header_title {
@@ -328,8 +326,9 @@
     <div id="col_left" class="col_left border">
       <div id="col_left_content">
         <a class="btn btn-default btn-lg btn-block btn_tags"
-            title="Generate new poem" onclick="getPoem()">
+            title="Generate poem" onclick="getPoem()">
           <span id="save_glyphicon" class="glyphicon glyphicon-refresh"></span>
+          Generate poem
         </a>
         <br>
         <p>Poetic form</p>
