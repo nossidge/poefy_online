@@ -9,10 +9,6 @@
   <link href="https://tilde.town/~nossidge/zelda/holy_grail.css" rel="stylesheet">
   <script language="javascript">
 
-    var welcomeText;
-    var desc_databases = <%= @desc_databases.to_json %>;
-    var poetic_forms   = <%= @poetic_forms.to_json %>;
-
     // Cribbed from https://stackoverflow.com/a/8435261/139299
     function weightedRand(spec) {
       let i, sum = 0, r = Math.random();
@@ -21,9 +17,32 @@
         if (r <= sum) return i;
       }
     }
-    function sample(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
+
+    // Add ruby-like 'sample' and 'shuffle' array functions to jQuery.
+    // https://stackoverflow.com/a/11935263/139299
+    // https://stackoverflow.com/a/12646864/139299
+    (function($) {
+      $.shuffle = function(arr) {
+        if (!$.isArray(arr)) return null;
+        let shuffled = arr.slice(0);
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+      };
+      $.sample = function(arr, size = 1) {
+        if (!$.isArray(arr)) return null;
+        let outArr = $.shuffle(arr).slice(0, size);
+        return (size == 1) ? outArr[0] : outArr;
+      };
+    })(jQuery);
+
+    // #########################################################################
+
+    var welcomeText;
+    var desc_databases = <%= @desc_databases.to_json %>;
+    var poetic_forms   = <%= @poetic_forms.to_json %>;
 
     // Get the poem from the JSON request.
     function getPoem() {
@@ -162,7 +181,7 @@
       let rhymeStrings = [].concat(...new Array(rhymeString));
 
       // Select a random rhyme from the array, and use that.
-      rhymeString = sample(rhymeStrings);
+      rhymeString = $.sample(rhymeStrings);
 
       // Parse to tokens and rhymes.
       let rhymeParsed = parseRhymeString(rhymeString);
