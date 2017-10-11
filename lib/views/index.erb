@@ -285,9 +285,46 @@
 
     // #########################################################################
 
+    // Clear all the option text boxes.
+    function clearOptions() {
+      $("#text_rhyme").val("");
+      $("#text_indent").val("");
+      $("#text_syllable").val("");
+      $("#text_regex").val("");
+      $("#text_acrostic").val("");
+    }
+
+    // Write the values in the example to the option boxes.
+    // Read the actual text of the 'pre' tag to get the values.
+    function exampleClick(preTag) {
+      clearOptions();
+      let options = {}
+      let lines = preTag.innerText.split("\n");
+      $.each( lines, function(index, elem) {
+        let value = elem.slice(15).trim();
+        if (elem.startsWith("Corpus:")) {
+          $("#dropdown_databases").val(value);
+        } else if (elem.startsWith("Rhyme scheme:")) {
+          $("#text_rhyme").val(value);
+          setPoemTypeRhyme();
+        } else if (elem.startsWith("Indentation:")) {
+          $("#text_indent").val(value);
+        } else if (elem.startsWith("Syllables:")) {
+          $("#text_syllable").val(value);
+        } else if (elem.startsWith("Regex:")) {
+          $("#text_regex").val(value);
+        } else if (elem.startsWith("Acrostic:")) {
+          $("#text_acrostic").val(value);
+        }
+      });
+      getPoem();
+    }
+
+    // #########################################################################
+
     // Onload, select 'shakespeare' and 'sonnet'.
     // Set up listeners for the toggle-able inputs.
-    $(document).ready(function() {
+    $(document).ready( function() {
       welcomeText = $("#poem_results").html();
       $("#welcome_text").toggleClass("hidden");
       let corpus = "shakespeare";
@@ -496,7 +533,7 @@
         <div id="help_indentation" class="hidden">
           <h3>Indentation</h3>
           <p>Indent each line by a certain number of spaces.</p>
-          <pre>Corpus:        shakespeare
+          <pre onclick="exampleClick(this)">Corpus:        shakespeare
 Rhyme scheme:  abab aabb
 Indentation:   0101 0012
 
@@ -514,7 +551,7 @@ Why should my heart think that a several plot,
           <h3>Syllables</h3>
           <p>Specify syllable count allowed for each line. There's a few valid forms it can take.</p>
           <p>If the string is just one number, all lines will be that number of syllables long.</p>
-          <pre>Corpus:        whitman
+          <pre onclick="exampleClick(this)">Corpus:        whitman
 Rhyme scheme:  abab
 Syllables:     6
 
@@ -524,7 +561,7 @@ making of those for war,
 By Broad Potomac's Shore
 beautiful than the sky.</pre>
           <p>If the string is comma delimited, all lines will be any of those numbers of syllables long.</p>
-          <pre>Corpus:        whitman
+          <pre onclick="exampleClick(this)">Corpus:        whitman
 Rhyme scheme:  abab
 Syllables:     4,8,12
 
@@ -534,7 +571,7 @@ He is thinly clothed, he leans forward as he runs,
 Sacred shape of the bearer of daughters and sons,
 On, on ye jocund twain! continue on the same!</pre>
           <p>If the string is an array encased in [square brackets], each element corresponds to a line in the output.</p>
-          <pre>Corpus:        whitman
+          <pre onclick="exampleClick(this)">Corpus:        whitman
 Rhyme scheme:  aabba
 Syllables:     [8,8,5,5,8]
 
@@ -544,7 +581,7 @@ refuse, all attend,
 for my dearest friend,
 be the stake, and respite no more.</pre>
           <p>If the string is a hash encased in {curly brackets}, the key will be used to match the line number. You can use '=>' or ':' as the assignment symbol. Keys of '0' are used as the default value.</p>
-          <pre>Corpus:        whitman
+          <pre onclick="exampleClick(this)">Corpus:        whitman
 Rhyme scheme:  aabba
 Syllables:     {0=>8,3=>5,4=>5}
 
@@ -554,7 +591,7 @@ Sit a while dear son,
 others for deeds done,
 I know very well I could not.</pre>
           <p>Values can be an exact integer syllable count, or an array of acceptable counts.</p>
-          <pre>Corpus:        whitman
+          <pre onclick="exampleClick(this)">Corpus:        whitman
 Rhyme scheme:  aabba
 Syllables:     {0=>[8,9],3=>[4,5,6],4=>[4,5,6]}
 
@@ -564,7 +601,7 @@ Poets to Come
 joints proportion'd and plumb.
 To be in any form, what is that?</pre>
           <p>Keys of negative integers count from the final line backwards.</p>
-          <pre>Corpus:        whitman
+          <pre onclick="exampleClick(this)">Corpus:        whitman
 Rhyme scheme:  aabba
 Syllables:     {0:4,-1:20}
 
