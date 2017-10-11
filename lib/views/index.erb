@@ -195,6 +195,9 @@
 
         // Randomise a particular option.
         switch(textboxID) {
+          case "#text_rhyme":
+            outputString = randomRhyme();
+            break;
           case "#text_indent":
             outputString = randomIndentation(rhymeParsed);
             break;
@@ -207,6 +210,18 @@
       // Write that back to the DOM and generate a new poem.
       $(textboxID).val(outputString);
       getPoem();
+    }
+
+    // Randomise the rhyme string.
+    // We've already got a list of a bunch of nice rhyme strings.
+    // We can just use the ones specified in the named poetic forms.
+    function randomRhyme() {
+      let rhymeStrings = [];
+      $.each( poetic_forms, function(index, elem) {
+        let toArr = [].concat(...new Array(elem.rhyme));
+        $.each( toArr, function(i2, e2) { rhymeStrings.push(e2); });
+      });
+      return $.sample(rhymeStrings);
     }
 
     // Randomise the indentation.
@@ -482,13 +497,20 @@
           </select>
         </div>
         <br>
-        <p>Rhyme scheme</p>
-        <div class="input-group">
-          <a id="rhyme" title="Toggle" onclick="togglePoemType();"
-              class="input-group-addon btn btn-default btn-lg btn-block btn_tags">
-            <span id="rhyme_glyphicon" class="glyphicon glyphicon-remove"></span>
-          </a>
-          <input id="text_rhyme" type="text" class="form-control input-lg" />
+        <div class="poem_option">
+          <p>Rhyme scheme</p>
+          <span class="tiny_hover_buttons">
+            <a href="#" onclick="clearInput('#text_rhyme')" title="Clear field">x</a>
+            <a href="#" onclick="randomisePoemOption('#text_rhyme')" title="Randomise">!</a>
+            <a href="#" onclick="helpText('help_rhyme')" title="Display help">?</a>
+          </span>
+          <div class="input-group btn-block">
+            <a id="rhyme" title="Toggle" onclick="togglePoemType();"
+                class="input-group-addon btn btn-default btn-lg btn-block btn_tags">
+              <span id="rhyme_glyphicon" class="glyphicon glyphicon-remove"></span>
+            </a>
+            <input id="text_rhyme" type="text" class="form-control input-lg" />
+          </div>
         </div>
         <br>
         <div class="poem_option">
