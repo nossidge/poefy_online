@@ -285,19 +285,24 @@
 
     // #########################################################################
 
+    // Clear a text box.
+    function clearInput(elem) {
+      $(elem).val("");
+    }
+
     // Clear all the option text boxes.
-    function clearOptions() {
-      $("#text_rhyme").val("");
-      $("#text_indent").val("");
-      $("#text_syllable").val("");
-      $("#text_regex").val("");
-      $("#text_acrostic").val("");
+    function clearInputs() {
+      clearInput("#text_rhyme");
+      clearInput("#text_indent");
+      clearInput("#text_syllable");
+      clearInput("#text_regex");
+      clearInput("#text_acrostic");
     }
 
     // Write the values in the example to the option boxes.
     // Read the actual text of the 'pre' tag to get the values.
     function exampleClick(preTag) {
-      clearOptions();
+      clearInputs();
       let options = {}
       let lines = preTag.innerText.split("\n");
       $.each( lines, function(index, elem) {
@@ -489,6 +494,7 @@
         <div class="poem_option">
           <p>Indentation</p>
           <span class="tiny_hover_buttons">
+            <a href="#" onclick="clearInput('#text_indent')" title="Clear field">x</a>
             <a href="#" onclick="randomisePoemOption('#text_indent')" title="Randomise">!</a>
             <a href="#" onclick="helpText('help_indentation')" title="Display help">?</a>
           </span>
@@ -500,6 +506,7 @@
         <div class="poem_option">
           <p>Syllables</p>
           <span class="tiny_hover_buttons">
+            <a href="#" onclick="clearInput('#text_syllable')" title="Clear field">x</a>
             <a href="#" onclick="randomisePoemOption('#text_syllable')" title="Randomise">!</a>
             <a href="#" onclick="helpText('help_syllables')" title="Display help">?</a>
           </span>
