@@ -197,6 +197,10 @@
         switch(textboxID) {
           case "#text_indent":
             outputString = randomIndentation(rhymeParsed);
+            break;
+          case "#text_syllable":
+            outputString = randomSyllables(rhymeParsed);
+            break;
         }
       }
 
@@ -220,6 +224,63 @@
       return $.map( rhymeParsed.rhymes, function(char) {
         return rhymeIndent[char];
       }).join("");
+    }
+
+    // Randomise the syllables.
+    // This is pretty rubbish, but at least it does something.
+    // Gives different results for even and odd line counts.
+    function randomSyllables(rhymeParsed) {
+      let syllableString;
+
+      // Find all lines that are not empty.
+      let linesToRhymes = {};
+      rhymeParsed.tokens.filter( function(elem, index) {
+        if (elem.trim() != "") {
+          linesToRhymes[index + 1] = elem;
+        }
+      });
+      let lineCount = Object.keys(linesToRhymes).length;
+
+      // Even lines vs odd lines.
+      // Only select if there are an even number of lines.
+      if (lineCount % 2 == 0) {
+        let line = 0, evenLineNos = [];
+        $.each( linesToRhymes, function(key, value) {
+          if (++line % 2 == 0) evenLineNos.push(key);
+        });
+
+        // Create the hash string.
+        let weight = {6:0.3, 8:0.4, 10:0.3};
+        let syllCountOdd  = weightedRand(weight);
+        let syllCountEven = weightedRand(weight);
+        if (syllCountOdd == syllCountEven) {
+          syllableString = syllCountOdd;
+        } else {
+          syllableString = "{0:" + syllCountOdd;
+          $.each( evenLineNos, function(index, lineNo) {
+            syllableString += "," + lineNo + ":" + syllCountEven;
+          });
+          syllableString += "}";
+        }
+
+      // Use array of 1-3 elements.
+      } else {
+        let count = weightedRand( {1:0.5, 2:0.3, 3:0.2} );
+        let weight = {6:0.3, 8:0.4, 10:0.3};
+        let arr = [];
+        for (let i = 0; i < count; i++) {
+          arr.push( weightedRand(weight) );
+        }
+
+        // Dedupe and sort.
+        arr = [...new Set(arr)].sort( function(a, b){return a-b} );
+
+        // If only one value, then return the value.
+        // If array, then delimit with commas.
+        syllableString = (arr.length == 1) ? arr[0] : arr.join(",");
+      }
+
+      return syllableString;
     }
 
     // #########################################################################
@@ -402,7 +463,7 @@
         <div class="poem_option">
           <p>Syllables</p>
           <span class="tiny_hover_buttons">
-            <a href="#" title="Randomise">!</a>
+            <a href="#" onclick="randomisePoemOption('#text_syllable')" title="Randomise">!</a>
             <a href="#" onclick="helpText('help_syllables')" title="Display help">?</a>
           </span>
           <div class="btn-block">
