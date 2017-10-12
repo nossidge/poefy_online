@@ -116,6 +116,9 @@
     // Show help text for a specific poem option.
     function helpText(helpTextID) {
       $("#poem_results").html(welcomeText);
+      $("#poem_results pre").each( function(index, elem) {
+        $(elem).html( $(elem).html().replace(/^\s+/mg, "") );
+      });
       $("#" + helpTextID).toggleClass("hidden");
     }
 
@@ -347,7 +350,7 @@
     function exampleClick(preTag) {
       let options = {}
       let lines = preTag.innerText.split("\n");
-      let header = lines.slice(0, lines.indexOf(""));
+      let header = lines.slice(0, lines.indexOf("\xa0"));
       $.each( header, function(index, elem) {
         let value = elem.slice(15).trim();
         if (elem.startsWith("Corpus:")) {
@@ -379,7 +382,7 @@
 
       // Request a poem and write it to the same <pre> tag.
       getPoemFromAPI(options, function(text) {
-        $(preTag).html(header.join("\n") + "\n\n" + text);
+        $(preTag).html(header.join("\n") + "\n\xa0\n" + text);
       });
     }
 
@@ -605,171 +608,195 @@
           <p>Specifies a rhyme structure that the poem must follow. This is the most important argument; the whole poem is based on this. 'Rhyme scheme' and 'Poetic form' are mutually exclusive; if one field is selected the other will be automatically deselected.</p>
           <p>Each token in the rhyme string represents a line in the poem. Letters indicate rhymes, so all 'a' or 'A' lines have the same rhyme.</p>
           <p>Example, sonnet:</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  ababcdcdefefgg
-
-Towers of fables immortal fashion'd from mortal dreams!
-The colloquy there, the trio, each uttering,
-To sound of different, prouder songs, with stronger themes,
-Steady the roar of the gale, with incessant undertone muttering,
-I hear dervishes monotonously chanting, interspers'd with frantic
-from his cheeks,
-Pacific and the north Atlantic,
-Lo, Victress on the peaks,
-work-people at their meals,
-She does not tarry to smooth her hair nor adjust her cap.
-Was fill'd with aspirations high, unform'd ideals,
-and the climbing sap,
-Whence to arise inevitable in time, the towering roofs, the lamps,
-mighty camps.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  ababcdcdefefgg
+            &nbsp;
+            Towers of fables immortal fashion'd from mortal dreams!
+            The colloquy there, the trio, each uttering,
+            To sound of different, prouder songs, with stronger themes,
+            Steady the roar of the gale, with incessant undertone muttering,
+            I hear dervishes monotonously chanting, interspers'd with frantic
+            from his cheeks,
+            Pacific and the north Atlantic,
+            Lo, Victress on the peaks,
+            work-people at their meals,
+            She does not tarry to smooth her hair nor adjust her cap.
+            Was fill'd with aspirations high, unform'd ideals,
+            and the climbing sap,
+            Whence to arise inevitable in time, the towering roofs, the lamps,
+            mighty camps.
+          </pre>
           <p>Uppercase letter lines will be duplicated exactly. This is used to create refrain lines.</p>
           <p>Example, rondeau:</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  aabba aabC aabbaC
-
-An attendant follows holding a tray, he carries a refuse pail,
-speeds by under full sail.
-Gently, but with undeniable will, divesting myself of the holds that
-Grandmother, loving daughter, loving daughter's daughter, sat,
-O I do not know whether many passing by will discover you or inhale
-
-Here lands female and male,
-Appear'd the cloud, appear'd the long black trail,
-Or southward along the Tennessee or Cumberland rivers, or at
-What is yours is mine my father.
-
-bead-bags for sale,
-To her children the words of the eloquent dumb great mother never fail,
-cypresses growing out of the white sand that spreads far and flat,
-His glance is calm and commanding, he tosses the slouch of his hat
-what avail?
-What is yours is mine my father.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  aabba aabC aabbaC
+            &nbsp;
+            An attendant follows holding a tray, he carries a refuse pail,
+            speeds by under full sail.
+            Gently, but with undeniable will, divesting myself of the holds that
+            Grandmother, loving daughter, loving daughter's daughter, sat,
+            O I do not know whether many passing by will discover you or inhale
+            &nbsp;
+            Here lands female and male,
+            Appear'd the cloud, appear'd the long black trail,
+            Or southward along the Tennessee or Cumberland rivers, or at
+            What is yours is mine my father.
+            &nbsp;
+            bead-bags for sale,
+            To her children the words of the eloquent dumb great mother never fail,
+            cypresses growing out of the white sand that spreads far and flat,
+            His glance is calm and commanding, he tosses the slouch of his hat
+            what avail?
+            What is yours is mine my father.
+          </pre>
           <p>Numbers after a capital letter indicate which specific line to repeat. This is so you can have repeated lines that use the same rhyme scheme.</p>
           <p>Example, villanelle:</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  A1bA2 abA1 abA2 abA1 abA2 abA1A2
-Syllables:     6,7,8,9
-
-I saw old General at bay,
-Watching the east, the autumn sky.
-Put me down and depart on your way.
-
-When I Heard at the Close of the Day
-ever happier than I,
-I saw old General at bay,
-
-and interminable as they,
-looks at the oats and rye,
-Put me down and depart on your way.
-
-afternoon she went away,
-To One Shortly to Die
-I saw old General at bay,
-
-Hush'd be the camps to-day,
-These waifs from the deep, cast high and dry,
-Put me down and depart on your way.
-
-head, laughter, and naivete,
-(Pleas'd to my soul at death I cry,)
-I saw old General at bay,
-Put me down and depart on your way.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  A1bA2 abA1 abA2 abA1 abA2 abA1A2
+            Syllables:     6,7,8,9
+            &nbsp;
+            I saw old General at bay,
+            Watching the east, the autumn sky.
+            Put me down and depart on your way.
+            &nbsp;
+            When I Heard at the Close of the Day
+            ever happier than I,
+            I saw old General at bay,
+            &nbsp;
+            and interminable as they,
+            looks at the oats and rye,
+            Put me down and depart on your way.
+            &nbsp;
+            afternoon she went away,
+            To One Shortly to Die
+            I saw old General at bay,
+            &nbsp;
+            Hush'd be the camps to-day,
+            These waifs from the deep, cast high and dry,
+            Put me down and depart on your way.
+            &nbsp;
+            head, laughter, and naivete,
+            (Pleas'd to my soul at death I cry,)
+            I saw old General at bay,
+            Put me down and depart on your way.
+          </pre>
         </div>
         <div id="help_indentation" class="hidden">
           <h3>Indentation</h3>
           <p>Indent each line by a certain number of spaces.</p>
-          <pre onclick="exampleClick(this)">Corpus:        shakespeare
-Rhyme scheme:  abab aabb
-Indentation:   0101 0012
-
-O! what a mansion have those vices got
-&nbsp;&nbsp;And more, much more, than in my verse can sit,
-Nay, if you read this line, remember not
-&nbsp;&nbsp;For whether beauty, birth, or wealth, or wit,
-
-But what's so blessed-fair that fears no blot?
-Why should my heart think that a several plot,
-&nbsp;&nbsp;Thy merit hath my duty strongly knit,
-&nbsp;&nbsp;&nbsp;&nbsp;Your own glass shows you when you look in it.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        shakespeare
+            Rhyme scheme:  abab aabb
+            Indentation:   0101 0012
+            &nbsp;
+            O! what a mansion have those vices got
+            &nbsp;&nbsp;And more, much more, than in my verse can sit,
+            Nay, if you read this line, remember not
+            &nbsp;&nbsp;For whether beauty, birth, or wealth, or wit,
+            &nbsp;
+            But what's so blessed-fair that fears no blot?
+            Why should my heart think that a several plot,
+            &nbsp;&nbsp;Thy merit hath my duty strongly knit,
+            &nbsp;&nbsp;&nbsp;&nbsp;Your own glass shows you when you look in it.
+          </pre>
           <p>Using '0' as the value resets all indents. You can use this to nullify the default indentation of a poetic form.</p>
-          <pre onclick="exampleClick(this)">Corpus:        dickinson
-Poetic form:   common
-Indentation:   0
-
-So busy was she, finishing,
-The bravest of the host,
-Though never yet, in any port,
-Bride of the Holy Ghost!</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        dickinson
+            Poetic form:   common
+            Indentation:   0
+            &nbsp;
+            So busy was she, finishing,
+            The bravest of the host,
+            Though never yet, in any port,
+            Bride of the Holy Ghost!
+          </pre>
         </div>
         <div id="help_syllables" class="hidden">
           <h3>Syllables</h3>
           <p>Specify syllable count allowed for each line. There's a few valid forms it can take.</p>
           <p>If the string is just one number, all lines will be that number of syllables long.</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  abab
-Syllables:     6
-
-Phantoms of countless lost,
-O darkness! O in vain!
-and silent there at last,
-friendship I take again.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  abab
+            Syllables:     6
+            &nbsp;
+            Phantoms of countless lost,
+            O darkness! O in vain!
+            and silent there at last,
+            friendship I take again.
+          </pre>
           <p>If the string is comma delimited, all lines will be any of those numbers of syllables long.</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  abab
-Syllables:     4,8,12
-
-This arm, this hand, this voice, have nourish'd, rais'd, restored,
-Give me the pay I have served for,
-his unsheath'd sword,
-be the stake, and respite no more.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  abab
+            Syllables:     4,8,12
+            &nbsp;
+            This arm, this hand, this voice, have nourish'd, rais'd, restored,
+            Give me the pay I have served for,
+            his unsheath'd sword,
+            be the stake, and respite no more.
+          </pre>
           <p>If the string is an array encased in [square brackets], each element corresponds to a line in the output.</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  aabba
-Syllables:     [8,8,5,5,8]
-
-Thus by blue Ontario's shore,
-Give me the pay I have served for,
-refuse, all attend,
-for my dearest friend,
-be the stake, and respite no more.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  aabba
+            Syllables:     [8,8,5,5,8]
+            &nbsp;
+            Thus by blue Ontario's shore,
+            Give me the pay I have served for,
+            refuse, all attend,
+            for my dearest friend,
+            be the stake, and respite no more.
+          </pre>
           <p>If the string is a hash encased in {curly brackets}, the key will be used to match the line number. You can use '=>' or ':' as the assignment symbol. Keys of '0' are used as the default value.</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  aabba
-Syllables:     {0=>8,3=>5,4=>5}
-
-Sail out for Good, Eidolon Yacht!
-A glimpse through an interstice caught,
-Sit a while dear son,
-others for deeds done,
-I know very well I could not.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  aabba
+            Syllables:     {0=>8,3=>5,4=>5}
+            &nbsp;
+            Sail out for Good, Eidolon Yacht!
+            A glimpse through an interstice caught,
+            Sit a while dear son,
+            others for deeds done,
+            I know very well I could not.
+          </pre>
           <p>Values can be an exact integer syllable count, or an array of acceptable counts.</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  aabba
-Syllables:     {0=>[8,9],3=>[4,5,6],4=>[4,5,6]}
-
-their flesh against me as I sat,
-and not hit, that which I hinted at;
-Poets to Come
-joints proportion'd and plumb.
-To be in any form, what is that?</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  aabba
+            Syllables:     {0=>[8,9],3=>[4,5,6],4=>[4,5,6]}
+            &nbsp;
+            their flesh against me as I sat,
+            and not hit, that which I hinted at;
+            Poets to Come
+            joints proportion'd and plumb.
+            To be in any form, what is that?
+          </pre>
           <p>Keys of negative integers count from the final line backwards.</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Rhyme scheme:  aabba
-Syllables:     {0:4,-1:20}
-
-To-Day and Thee
-Far, far at sea,
-catching disease.
-toward the knees,
-I believe you are latent with unseen existences, you are so dear to me.</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  aabba
+            Syllables:     {0:4,-1:20}
+            &nbsp;
+            To-Day and Thee
+            Far, far at sea,
+            catching disease.
+            toward the knees,
+            I believe you are latent with unseen existences, you are so dear to me.
+          </pre>
           <p>Using '0' as the value will ignore any syllable matching. You can use this to nullify the syllable constraints of a poetic form. So to get a random non-rhyming triplet, you could use the 'haiku' form with '0' as syllables.</p>
-          <pre onclick="exampleClick(this)">Corpus:        whitman
-Poetic form:   haiku
-Syllables:     0
-
-Old Ireland
-How the flukes splash!
-O to resume the joys of the soldier!</pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Poetic form:   haiku
+            Syllables:     0
+            &nbsp;
+            Old Ireland
+            How the flukes splash!
+            O to resume the joys of the soldier!
+          </pre>
         </div>
       </div>
     </div>
