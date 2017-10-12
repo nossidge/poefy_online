@@ -332,6 +332,7 @@
         let value = elem.slice(15).trim();
         if (elem.startsWith("Corpus:")) {
           $("#dropdown_databases").val(value);
+          $("#database_desc").text(desc_databases[value]);
         } else if (elem.startsWith("Poetic form:")) {
           $("#dropdown_poetic_forms").val(value);
           setPoemTypePoeticForm();
@@ -570,6 +571,81 @@
           <p>Project currently <a href="https://github.com/nossidge/poefy_online">in progress</a>.</p>
           <p>Most features are not yet implemented.</p>
         </div>
+        <div id="help_rhyme" class="hidden">
+          <h3>Rhyme scheme</h3>
+          <p>Specifies a rhyme structure that the poem must follow. This is the most important argument; the whole poem is based on this. 'Rhyme scheme' and 'Poetic form' are mutually exclusive; if one field is selected the other will be automatically deselected.</p>
+          <p>Each token in the rhyme string represents a line in the poem. Letters indicate rhymes, so all 'a' or 'A' lines have the same rhyme.</p>
+          <p>Example, sonnet:</p>
+          <pre onclick="exampleClick(this)">Corpus:        whitman
+Rhyme scheme:  ababcdcdefefgg
+
+Towers of fables immortal fashion'd from mortal dreams!
+The colloquy there, the trio, each uttering,
+To sound of different, prouder songs, with stronger themes,
+Steady the roar of the gale, with incessant undertone muttering,
+I hear dervishes monotonously chanting, interspers'd with frantic
+from his cheeks,
+Pacific and the north Atlantic,
+Lo, Victress on the peaks,
+work-people at their meals,
+She does not tarry to smooth her hair nor adjust her cap.
+Was fill'd with aspirations high, unform'd ideals,
+and the climbing sap,
+Whence to arise inevitable in time, the towering roofs, the lamps,
+mighty camps.</pre>
+          <p>Uppercase letter lines will be duplicated exactly. This is used to create refrain lines.</p>
+          <p>Example, rondeau:</p>
+          <pre onclick="exampleClick(this)">Corpus:        whitman
+Rhyme scheme:  aabba aabC aabbaC
+
+An attendant follows holding a tray, he carries a refuse pail,
+speeds by under full sail.
+Gently, but with undeniable will, divesting myself of the holds that
+Grandmother, loving daughter, loving daughter's daughter, sat,
+O I do not know whether many passing by will discover you or inhale
+
+Here lands female and male,
+Appear'd the cloud, appear'd the long black trail,
+Or southward along the Tennessee or Cumberland rivers, or at
+What is yours is mine my father.
+
+bead-bags for sale,
+To her children the words of the eloquent dumb great mother never fail,
+cypresses growing out of the white sand that spreads far and flat,
+His glance is calm and commanding, he tosses the slouch of his hat
+what avail?
+What is yours is mine my father.</pre>
+          <p>Numbers after a capital letter indicate which specific line to repeat. This is so you can have repeated lines that use the same rhyme scheme.</p>
+          <p>Example, villanelle:</p>
+          <pre onclick="exampleClick(this)">Corpus:        whitman
+Rhyme scheme:  A1bA2 abA1 abA2 abA1 abA2 abA1A2
+Syllables:     6,7,8,9
+
+I saw old General at bay,
+Watching the east, the autumn sky.
+Put me down and depart on your way.
+
+When I Heard at the Close of the Day
+ever happier than I,
+I saw old General at bay,
+
+and interminable as they,
+looks at the oats and rye,
+Put me down and depart on your way.
+
+afternoon she went away,
+To One Shortly to Die
+I saw old General at bay,
+
+Hush'd be the camps to-day,
+These waifs from the deep, cast high and dry,
+Put me down and depart on your way.
+
+head, laughter, and naivete,
+(Pleas'd to my soul at death I cry,)
+I saw old General at bay,
+Put me down and depart on your way.</pre>
+        </div>
         <div id="help_indentation" class="hidden">
           <h3>Indentation</h3>
           <p>Indent each line by a certain number of spaces.</p>
@@ -586,6 +662,15 @@ But what's so blessed-fair that fears no blot?
 Why should my heart think that a several plot,
 &nbsp;&nbsp;Thy merit hath my duty strongly knit,
 &nbsp;&nbsp;&nbsp;&nbsp;Your own glass shows you when you look in it.</pre>
+          <p>Using '0' as the value resets all indents. You can use this to nullify the default indentation of a poetic form.</p>
+          <pre onclick="exampleClick(this)">Corpus:        dickinson
+Poetic form:   common
+Indentation:   0
+
+So busy was she, finishing,
+The bravest of the host,
+Though never yet, in any port,
+Bride of the Holy Ghost!</pre>
         </div>
         <div id="help_syllables" class="hidden">
           <h3>Syllables</h3>
