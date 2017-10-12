@@ -93,8 +93,7 @@
 
     // Display the corpus description.
     function selectDatabase(database) {
-      $("#dropdown_databases").val(database);
-      $("#database_desc").text(desc_databases[database]);
+      setCorpus(database);
       getPoem();
     }
 
@@ -314,6 +313,20 @@
 
     // #########################################################################
 
+    // These form changes require more than just '.val(foo)'
+    function setCorpus(value) {
+      $("#dropdown_databases").val(value);
+      $("#database_desc").text(desc_databases[value]);
+    }
+    function setPoeticForm(value) {
+      $("#dropdown_poetic_forms").val(value);
+      setPoemTypePoeticForm();
+    }
+    function setRhymeScheme(value) {
+      $("#text_rhyme").val(value);
+      setPoemTypeRhyme();
+    }
+
     // Clear a text box.
     function clearInput(elem) {
       $(elem).val("");
@@ -328,34 +341,46 @@
       clearInput("#text_acrostic");
     }
 
-    // Write the values in the example to the option boxes.
     // Read the actual text of the 'pre' tag to get the values.
+    // Write the values in the example to the option boxes.
+    // Generate a poem using the values.
     function exampleClick(preTag) {
-      clearInputs();
       let options = {}
       let lines = preTag.innerText.split("\n");
-      $.each( lines, function(index, elem) {
+      let header = lines.slice(0, lines.indexOf(""));
+      $.each( header, function(index, elem) {
         let value = elem.slice(15).trim();
         if (elem.startsWith("Corpus:")) {
-          $("#dropdown_databases").val(value);
-          $("#database_desc").text(desc_databases[value]);
+          options.corpus = value;
         } else if (elem.startsWith("Poetic form:")) {
-          $("#dropdown_poetic_forms").val(value);
-          setPoemTypePoeticForm();
+          options.form = value;
         } else if (elem.startsWith("Rhyme scheme:")) {
-          $("#text_rhyme").val(value);
-          setPoemTypeRhyme();
+          options.rhyme = value;
         } else if (elem.startsWith("Indentation:")) {
-          $("#text_indent").val(value);
+          options.indent = value;
         } else if (elem.startsWith("Syllables:")) {
-          $("#text_syllable").val(value);
+          options.syllable = value;
         } else if (elem.startsWith("Regex:")) {
-          $("#text_regex").val(value);
+          options.regex = value;
         } else if (elem.startsWith("Acrostic:")) {
-          $("#text_acrostic").val(value);
+          options.acrostic = value;
         }
       });
-      getPoem();
+
+      // Update the form elements.
+      clearInputs();
+      if (options.corpus  ) setCorpus(options.corpus);
+      if (options.form    ) setPoeticForm(options.form);
+      if (options.rhyme   ) setRhymeScheme(options.rhyme);
+      if (options.indent  ) $("#text_indent")  .val(options.indent);
+      if (options.syllable) $("#text_syllable").val(options.syllable);
+      if (options.regex   ) $("#text_regex")   .val(options.regex);
+      if (options.acrostic) $("#text_acrostic").val(options.acrostic);
+
+      // Request a poem and write to the DOM.
+      getPoemFromAPI(options, function(text) {
+        $("#poem_results").html(text);
+      });
     }
 
     // #########################################################################
@@ -365,10 +390,8 @@
     $(document).ready( function() {
       welcomeText = $("#poem_results").html();
       $("#welcome_text").toggleClass("hidden");
-      let corpus = "shakespeare";
-      $("#dropdown_databases").val(corpus);
-      $("#database_desc").text(desc_databases[corpus]);
-      $("#dropdown_poetic_forms").val("sonnet");
+      setCorpus("shakespeare");
+      setPoeticForm("sonnet");
       $("#dropdown_poetic_forms").focus(setPoemTypePoeticForm);
       $("#text_rhyme").focus(setPoemTypeRhyme);
       $("#text_rhyme").change(highlightInvalidRhyme);
