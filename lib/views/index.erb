@@ -332,6 +332,9 @@
         let value = elem.slice(15).trim();
         if (elem.startsWith("Corpus:")) {
           $("#dropdown_databases").val(value);
+        } else if (elem.startsWith("Poetic form:")) {
+          $("#dropdown_poetic_forms").val(value);
+          setPoemTypePoeticForm();
         } else if (elem.startsWith("Rhyme scheme:")) {
           $("#text_rhyme").val(value);
           setPoemTypeRhyme();
@@ -647,6 +650,14 @@ Far, far at sea,
 catching disease.
 toward the knees,
 I believe you are latent with unseen existences, you are so dear to me.</pre>
+          <p>Using '0' as the value will ignore any syllable matching. You can use this to nullify the syllable constraints of a poetic form. So to get a random non-rhyming triplet, you could use the 'haiku' form with '0' as syllables.</p>
+          <pre onclick="exampleClick(this)">Corpus:        whitman
+Poetic form:   haiku
+Syllables:     0
+
+Old Ireland
+How the flukes splash!
+O to resume the joys of the soldier!</pre>
         </div>
       </div>
     </div>
