@@ -164,39 +164,45 @@
 
     // Randomise option string based on the rhyme string.
     function randomisePoemOption(textboxID) {
-      let outputString = "";
+      let outputString, rhymeParsed, isValid = true;
 
-      // Get rhyme string from textbox or from poetic form.
-      let rhymeString;
-      let usePoeticForm = $("#poetic_form").hasClass("active");
-      if (usePoeticForm) {
-        let form = $("#dropdown_poetic_forms").val();
-        rhymeString = poetic_forms[form].rhyme;
-      } else {
-        rhymeString = $("#text_rhyme").val();
+      // No need to validate rhyme if it's the rhyme we are randomising.
+      if (textboxID != "#text_rhyme") {
+
+        // Get rhyme string from textbox or from poetic form.
+        let rhymeString;
+        let usePoeticForm = $("#poetic_form").hasClass("active");
+        if (usePoeticForm) {
+          let form = $("#dropdown_poetic_forms").val();
+          rhymeString = poetic_forms[form].rhyme.slice(0);
+        } else {
+          rhymeString = $("#text_rhyme").val();
+        }
+
+        // Some poetic forms have multiple rhymes to choose from.
+        // So if it's a single string, coerce to flattened array.
+        let rhymeStrings = [].concat(...new Array(rhymeString));
+
+        // Select a random rhyme from the array, and use that.
+        rhymeString = $.sample(rhymeStrings);
+
+        // Parse to tokens and rhymes.
+        rhymeParsed = parseRhymeString(rhymeString);
+
+        // Get a list of the unique rhymes.
+        let uniques = [...new Set(rhymeParsed.rhymes)];
+
+        // Don't do anything if the rhyme string is invalid or empty.
+        let isEmpty = (uniques.length == 1 && uniques[0].trim() == "");
+        isValid = rhymeParsed.valid && !isEmpty
       }
 
-      // Some poetic forms have multiple rhymes to choose from.
-      // So if it's a single string, coerce to flattened array.
-      let rhymeStrings = [].concat(...new Array(rhymeString));
-
-      // Select a random rhyme from the array, and use that.
-      rhymeString = $.sample(rhymeStrings);
-
-      // Parse to tokens and rhymes.
-      let rhymeParsed = parseRhymeString(rhymeString);
-
-      // Get a list of the unique rhymes.
-      let uniques = [...new Set(rhymeParsed.rhymes)];
-
-      // Don't do anything if the rhyme string is invalid or empty.
-      let empty = (uniques.length == 1 && uniques[0].trim() == "");
-      if (rhymeParsed.valid && !empty) {
-
-        // Randomise a particular option.
+      // Randomise a particular option string.
+      if (isValid) {
         switch(textboxID) {
           case "#text_rhyme":
             outputString = randomRhyme();
+            setPoemTypeRhyme();
             break;
           case "#text_indent":
             outputString = randomIndentation(rhymeParsed);
@@ -205,11 +211,12 @@
             outputString = randomSyllables(rhymeParsed);
             break;
         }
-      }
 
-      // Write that back to the DOM and generate a new poem.
-      $(textboxID).val(outputString);
-      getPoem();
+        // Write that back to the DOM and generate a new poem.
+        $(textboxID).val(outputString);
+        if (textboxID == "#text_rhyme") highlightInvalidRhyme();
+        getPoem();
+      }
     }
 
     // Randomise the rhyme string.
