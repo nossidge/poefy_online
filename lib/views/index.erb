@@ -377,9 +377,9 @@
       if (options.regex   ) $("#text_regex")   .val(options.regex);
       if (options.acrostic) $("#text_acrostic").val(options.acrostic);
 
-      // Request a poem and write to the DOM.
+      // Request a poem and write it to the same <pre> tag.
       getPoemFromAPI(options, function(text) {
-        $("#poem_results").html(text);
+        $(preTag).html(header.join("\n") + "\n\n" + text);
       });
     }
 
@@ -709,21 +709,19 @@ Bride of the Holy Ghost!</pre>
 Rhyme scheme:  abab
 Syllables:     6
 
-To One Shortly to Die
-looks at the oats and rye,
-making of those for war,
-By Broad Potomac's Shore
-beautiful than the sky.</pre>
+Phantoms of countless lost,
+O darkness! O in vain!
+and silent there at last,
+friendship I take again.</pre>
           <p>If the string is comma delimited, all lines will be any of those numbers of syllables long.</p>
           <pre onclick="exampleClick(this)">Corpus:        whitman
 Rhyme scheme:  abab
 Syllables:     4,8,12
 
-Signing for Soul and Body, set to them my name,
-When I Peruse the Conquer'd Fame
-He is thinly clothed, he leans forward as he runs,
-Sacred shape of the bearer of daughters and sons,
-On, on ye jocund twain! continue on the same!</pre>
+This arm, this hand, this voice, have nourish'd, rais'd, restored,
+Give me the pay I have served for,
+his unsheath'd sword,
+be the stake, and respite no more.</pre>
           <p>If the string is an array encased in [square brackets], each element corresponds to a line in the output.</p>
           <pre onclick="exampleClick(this)">Corpus:        whitman
 Rhyme scheme:  aabba
