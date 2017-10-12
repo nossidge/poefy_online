@@ -73,15 +73,21 @@
       if (regex    != "") options.regex    = regex;
       if (acrostic != "") options.acrostic = acrostic;
 
-      // Serialise the object to URL parameters.
-      // Write response to the main div.
+      // Get from the API and write response to the main div.
+      getPoemFromAPI(options, function(text) {
+        $("#poem_results").html(text);
+      });
+    }
+
+    // Get the poem from the JSON request.
+    // 'options' is a hash that will be serialised to URL parameters.
+    // 'callback' is a function that does something with the HTML text.
+    function getPoemFromAPI(options, callback) {
       $.getJSON("poem?" + $.param(options), function(data) {
-        if (data.length != 0) {
-          let poem = data.join("<br>").replace(/ /g, "&nbsp;");
-          $("#poem_results").html(poem);
-        } else {
-          $("#poem_results").html("[A poem cannot be generated using the selected criteria]");
-        }
+        let text = (data.length != 0)
+          ? data.join("<br>").replace(/ /g, "&nbsp;")
+          : "[A poem cannot be generated using the selected criteria]";
+        callback(text);
       });
     }
 
