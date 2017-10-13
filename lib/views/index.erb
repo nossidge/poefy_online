@@ -45,7 +45,9 @@
     var desc_databases = <%= @desc_databases.to_json %>;
     var poetic_forms   = <%= @poetic_forms.to_json %>;
 
-    // Get the poem from the JSON request.
+    // #########################################################################
+
+    // Display a new poem using the UI values.
     function getPoem() {
       let corpus   = $("#dropdown_databases").val();
       let form     = $("#dropdown_poetic_forms").val();
@@ -65,6 +67,12 @@
         options.form = form;
       } else {
         options.rhyme = rhyme;
+
+        // If invalid, flash the rhyme textbox to draw attention.
+        if ( rhyme.trim() == "" || !parseRhymeString(rhyme).valid ) {
+          $("#text_rhyme").fadeOut(100).fadeIn(100);
+          return;
+        }
       }
 
       // Add optional attributes.
@@ -90,6 +98,8 @@
         callback(text);
       });
     }
+
+    // #########################################################################
 
     // Display the corpus description.
     function selectDatabase(database) {
