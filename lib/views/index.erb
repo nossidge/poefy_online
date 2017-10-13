@@ -581,9 +581,16 @@
           </div>
         </div>
         <br>
-        <p>Regex</p>
-        <div class="btn-block">
-          <input id="text_regex" type="text" class="form-control input-lg" />
+        <div class="poem_option">
+          <p>Regex</p>
+          <span class="tiny_hover_buttons">
+            <a href="#" onclick="clearInput('#text_regex')" title="Clear field">x</a>
+            <a href="#" onclick="randomisePoemOption('#text_regex')" title="Randomise">!</a>
+            <a href="#" onclick="helpText('help_regex')" title="Display help">?</a>
+          </span>
+          <div class="btn-block">
+            <input id="text_regex" type="text" class="form-control input-lg" />
+          </div>
         </div>
         <br>
         <p>Acrostic</p>
@@ -796,6 +803,49 @@
             Old Ireland
             How the flukes splash!
             O to resume the joys of the soldier!
+          </pre>
+        </div>
+        <div id="help_regex" class="hidden">
+          <h3>Regex</h3>
+          <p>Specify a regular expression for lines to follow.</p>
+          <p>If the string is just one regex, all lines will be forced to match that regex.</p>
+          <p>Example, each line begins with a capital letter:</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Poetic form:   limerick
+            Regex:         ^[A-Z].*$
+            &nbsp;
+            O heart-sick days! O nights of woe!
+            As I wended the shores I know,
+            The Voice of the Rain
+            I am there again.
+            To be lost if it must be so!
+          </pre>
+          <p>Example, no line contains the letter 'e':</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        dickinson
+            Poetic form:   limerick
+            Regex:         ^[^eE]*$
+            Syllables:     0
+            &nbsp;
+            Convulsion playing round,
+            A crash without a sound;
+            Apart, intrinsic, stand,
+            Or what Circassian land?
+            Has anybody found?
+          </pre>
+          <p>If the string is a hash, the key will be used to match the line number, in much the same way as the syllables string. Unlike with syllables though, you must use ruby's => key identifier, and not : as in JSON. Also, you must put the regex inside /slashes/.</p>
+          <p>A fairly complex example, to ensure all lines start with a capital letter, the last line ends with a full stop and all other lines end with a question mark:</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        shakespeare
+            Rhyme scheme:  abab
+            Regex:         {0=>/^[A-Z].*\?$/,-1=>/^[A-Z].*\.$/}
+            Syllables:     10
+            &nbsp;
+            And what is't but mine own when I praise thee?
+            Dost thou upon thy fading mansion spend?
+            When thou art all the better part of me?
+            In sequent toil all forwards do contend.
           </pre>
         </div>
       </div>
