@@ -1,0 +1,153 @@
+
+/*############################################################################*/
+/* This section is Holy Grail layout stuff. */
+/* https://philipwalton.github.io/solved-by-flexbox/demos/holy-grail/ */
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 97vh;
+}
+.contents {
+  display: flex;
+  flex-direction: column;
+}
+.col_left {
+  flex: 0 0 16em;
+  order: -1;
+  overflow: auto;
+}
+.col_middle, .col_right {
+  flex: 1;
+}
+
+.border {
+  border: 2px solid #000000;
+}
+
+@media (min-width: 768px) {
+  .contents {
+    flex-direction: row;
+    flex: 1;
+  }
+  .col_left {
+    flex: 0 0 14em;
+  }
+  .col_middle, .col_right {
+    flex: 1;
+  }
+}
+
+body {
+  background-color: #DCDCDC;
+  font-family: 'Lucida Console', Monaco, monospace;
+  text-align: center;
+  color: #000000;
+}
+.col_left, .col_middle, .col_right, footer {
+  padding: 10px;
+}
+.col_left, .col_middle, .col_right {
+  text-align: left;
+}
+
+/*############################################################################*/
+/* Styles specific to the Poefy app. */
+
+body {
+  min-height: 100vh;
+}
+input {
+  text-align: left;
+}
+.header_div {
+  display: flex;
+  flex: 1;
+  margin: 10px;
+}
+.header_left {
+  order: -1;
+  flex: 0 0 368px;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+.header_title {
+  flex: 1;
+  order: 0;
+  text-align: left;
+  margin-top: 4px;
+  margin-left: 24px;
+}
+.header_right {
+  flex: 0 0 44px;
+  margin-left: 8px;
+  margin-right: 0px;
+}
+.col_left {
+  flex: 0 0 28em;
+  min-height: 358px;
+}
+.col_middle {
+  background-color: white;
+  padding: 0px;
+}
+.top_button {
+  width: 100px;
+}
+.btn_tags {
+  color: rgb(85,85,85);
+  height: 44px;
+}
+#poem_results {
+  font-size: 120%;
+  margin: 12px;
+}
+#database_desc {
+  font-size: 200%;
+}
+.poem_option p {
+  float: left;
+}
+.tiny_hover_buttons {
+  float: right;
+}
+
+/*############################################################################*/
+/* Hover effect nabbed from here (class is 'the-icons') */
+/* http://www.plugolabs.com/twitter-bootstrap-button-generator/ */
+
+.tiny_hover_buttons a {
+  text-decoration: none;
+  color: black;
+  width: 20px;
+  height: 20px;
+  padding: 0px 0px 0px 6px;
+  float: left;
+  -moz-transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.tiny_hover_buttons a:hover, .tiny_hover_buttons a.active {
+  -webkit-box-shadow:
+    0 0 3px #c8c8c8,
+    transparent 0 0 0,
+    transparent 0 0 0,
+    transparent 0 0 0,
+    transparent 0 0 0;
+  -moz-box-shadow:
+    0 0 3px #c8c8c8,
+    transparent 0 0 0,
+    transparent 0 0 0,
+    transparent 0 0 0,
+    transparent 0 0 0;
+  box-shadow:
+    0 0 3px #c8c8c8,
+    transparent 0 0 0,
+    transparent 0 0 0,
+    transparent 0 0 0,
+    transparent 0 0 0;
+  background: #fff;
+}
+
+/*############################################################################*/
