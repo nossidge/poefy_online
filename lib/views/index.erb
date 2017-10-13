@@ -219,6 +219,9 @@
           case "#text_syllable":
             outputString = randomSyllables(rhymeParsed);
             break;
+          case "#text_regex":
+            outputString = randomRegex(rhymeParsed);
+            break;
         }
 
         // Write that back to the DOM and generate a new poem.
@@ -312,6 +315,19 @@
       }
 
       return syllableString;
+    }
+
+    // Randomise the syllables.
+    // Jusat pick one at random from an array.
+    function randomRegex(rhymeParsed) {
+      let regexes = [
+        "^[A-Z]",
+        "^[^eE]*$",
+        "^The\ ",
+        "!$",
+        "{0=>/^[A-Z].*\?$/,-1=>/^[A-Z].*\.$/}"
+      ];
+      return $.sample(regexes);
     }
 
     // #########################################################################
@@ -813,7 +829,7 @@
           <pre onclick="exampleClick(this)">
             Corpus:        whitman
             Poetic form:   limerick
-            Regex:         ^[A-Z].*$
+            Regex:         ^[A-Z]
             &nbsp;
             O heart-sick days! O nights of woe!
             As I wended the shores I know,
