@@ -114,9 +114,16 @@
           </div>
         </div>
         <br>
-        <p>Acrostic</p>
-        <div class="btn-block">
-          <input id="text_acrostic" type="text" class="form-control input-lg" />
+        <div class="poem_option">
+          <p>Acrostic</p>
+          <span class="tiny_hover_buttons">
+            <a href="#" onclick="clearInput('#text_acrostic')" title="Clear field">x</a>
+            <a href="#" onclick="randomisePoemOption('#text_acrostic')" title="Randomise">!</a>
+            <a href="#" onclick="helpText('help_acrostic')" title="Display help">?</a>
+          </span>
+          <div class="btn-block">
+            <input id="text_acrostic" type="text" class="form-control input-lg" />
+          </div>
         </div>
       </div>
     </div>
@@ -367,6 +374,59 @@
             Dost thou upon thy fading mansion spend?
             When thou art all the better part of me?
             In sequent toil all forwards do contend.
+          </pre>
+        </div>
+        <div id="help_acrostic" class="hidden">
+          <h3>Acrostic</h3>
+          <p>Since there's a regular expression matcher it's pretty trivial to use it to generate acrostics. This option just creates regexes for the first character of each line, either upper or lowercase. Works best if you remove any indentation of lines.</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        therese
+            Rhyme scheme:  abba abba cde cde
+            Indentation:   0
+            Syllables:     10
+            Acrostic:      stop that fat cat
+            &nbsp;
+            So, if I may not here behold Thy Face,
+            Thy sanctuary here, dear Lord, am I,
+            O may He quickly come! He draweth nigh!
+            Pride tore down Satan from his lofty place,
+            &nbsp;
+            To martial hosts she brought God's saving grace;
+            He, He alone, can understand my cry.
+            Ah, how I hope one day with them to fly!
+            To find it there at morn, how swift I'd race!
+            &nbsp;
+            For this I plead with Thee by night, by day;
+            And Thou art Love Itself upon Thy throne,
+            To live of love, it is to know no fear;
+            &nbsp;
+            Conquered by her, the foe fled far away.
+            Ah! take my heart! Jesus, tis Thine alone;
+            To guard the faith, uphold God's honor here.
+          </pre>
+          <p>You must also beware of repeated lines (uppercase letters in the rhyme string). For example, a rondeau uses the rhyme form 'aabba aabC aabbaC', so the acrostic needs to have the same letter for both 'C' repeated lines.</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        therese
+            Poetic form:   rondeau
+            Acrostic:      grown ever softer
+            &nbsp;
+            God, Three in One, and One in Three,
+            Remember thy first-born, thy bright Marie,
+            Of heaven's King the lowly bride!
+            Within Thy Sacred Heart, ah! let me hide.
+            No more the sense of exile weighs on me,
+            &nbsp;
+            E'en when, to try my faith, from me Thou hidest Thee;
+            Veiled in His Eucharist I see
+            Each moment Thou my way dost guard and guide;
+            Remember, O my Jesu! Word of life!
+            &nbsp;
+            So His cradle, Sister, be!
+            Our Friend is He, our Spouse is He!
+            For Thee alone, O God, I quit my father's side,
+            Till my last evening, oh! with me abide,
+            Escaping from Thy lips on Calvary's tree:
+            Remember, O my Jesu! Word of life!
           </pre>
         </div>
       </div>
