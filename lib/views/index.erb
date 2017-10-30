@@ -267,12 +267,23 @@
           <pre onclick="exampleClick(this)">
             Corpus:        whitman
             Rhyme scheme:  abab
-            Syllables:     4,8,12
+            Syllables:     8,9,10,11,12
             &nbsp;
-            This arm, this hand, this voice, have nourish'd, rais'd, restored,
-            Give me the pay I have served for,
-            his unsheath'd sword,
-            be the stake, and respite no more.
+            Fresh come, to a new world indeed, yet long prepared,
+            And any thing I have I bestow.
+            The same at last and at last when peace is declared,
+            Scooting obliquely high and low.
+          </pre>
+          <p>The above can also be written to use a range format.</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  abab
+            Syllables:     8-12
+            &nbsp;
+            Fresh come, to a new world indeed, yet long prepared,
+            And any thing I have I bestow.
+            The same at last and at last when peace is declared,
+            Scooting obliquely high and low.
           </pre>
           <p>If the string is an array encased in [square brackets], each element corresponds to a line in the output.</p>
           <pre onclick="exampleClick(this)">
@@ -286,11 +297,11 @@
             for my dearest friend,
             be the stake, and respite no more.
           </pre>
-          <p>If the string is a hash encased in {curly brackets}, the key will be used to match the line number. You can use '=>' or ':' as the assignment symbol. Keys of '0' are used as the default value.</p>
+          <p>If the string is a hash encased in {curly brackets}, the key will be used to match the line number. Use ':' or ': ' as the assignment symbol. Keys of '0' are used as the default value.</p>
           <pre onclick="exampleClick(this)">
             Corpus:        whitman
             Rhyme scheme:  aabba
-            Syllables:     {0=>8,3=>5,4=>5}
+            Syllables:     {0:8,3:5,4:5}
             &nbsp;
             Sail out for Good, Eidolon Yacht!
             A glimpse through an interstice caught,
@@ -298,11 +309,11 @@
             others for deeds done,
             I know very well I could not.
           </pre>
-          <p>Values can be an exact integer syllable count, or an array of acceptable counts.</p>
+          <p>Values can be an exact integer syllable count, or an array or range of acceptable counts.</p>
           <pre onclick="exampleClick(this)">
             Corpus:        whitman
             Rhyme scheme:  aabba
-            Syllables:     {0=>[8,9],3=>[4,5,6],4=>[4,5,6]}
+            Syllables:     {0:[8,9],3:[4-6],4:[4-6]}
             &nbsp;
             their flesh against me as I sat,
             and not hit, that which I hinted at;
@@ -337,6 +348,28 @@
             And art thou sleeping yet?
             And dip your fingers in the frost:
             The bee, dost thou forget?
+          </pre>
+          <p>A more advanced version of the above, you can use the letter 'm' to perform a <a href="https://en.wikipedia.org/wiki/Modulo_operation">modulo operation</a> on the line number. This key takes the format '[divider]m[remainder]'. Any empty lines are ignored.</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  abb abb cdd cdd
+            Syllables:     {0:4, 3m1:8}
+            &nbsp;
+            From Spanish chestnut trees' dense shade,
+            close-pack'd square,
+            secure up there,
+            &nbsp;
+            Nor discovery have I made,
+            colt from the mare,
+            free, open air,
+            &nbsp;
+            On journeys through the States we start,
+            lawless than we;)
+            To-Day and Thee
+            &nbsp;
+            Joining with master-tongue bore part.
+            Far, far at sea,
+            adhere to me?
           </pre>
           <p>Using '0' as the value will ignore any syllable matching. You can use this to nullify the syllable constraints of a poetic form. So to get a random non-rhyming triplet, you could use the 'haiku' form with '0' as syllables.</p>
           <pre onclick="exampleClick(this)">
@@ -378,12 +411,12 @@
             Or what Circassian land?
             Has anybody found?
           </pre>
-          <p>If the string is a hash, the key will be used to match the line number, in much the same way as the syllables string. Unlike with syllables though, you must use ruby's => key identifier, and not : as in JSON. Also, you must put the regex inside /slashes/.</p>
+          <p>If the string is a hash, the key will be used to match the line number, in much the same way as the syllables string. Like with syllables, it will be parsed as YAML, but here we are more concerned about string substitution messing up the regex. So you have to use ':'' as the key identifier. Also, you must put the regex inside 'single' or "double" quotes.</p>
           <p>A fairly complex example, to ensure all lines start with a capital letter, the last line ends with a full stop and all other lines end with a question mark:</p>
           <pre onclick="exampleClick(this)">
             Corpus:        shakespeare
             Rhyme scheme:  abab
-            Regex:         {0=>/^[A-Z].*\?$/,-1=>/^[A-Z].*\.$/}
+            Regex:         {0: '^[A-Z].*\?$', -1: '^[A-Z].*\.$'}
             Syllables:     10
             &nbsp;
             And what is't but mine own when I praise thee?
