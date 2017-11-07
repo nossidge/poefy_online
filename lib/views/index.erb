@@ -48,18 +48,24 @@
           Generate poem
         </a>
         <br>
-        <p>Poetic form</p>
-        <div class="input-group">
-          <a id="poetic_form" title="Toggle" onclick="togglePoemType();"
-              class="input-group-addon btn btn-default btn-lg btn-block btn_tags active">
-            <span id="poetic_form_glyphicon" class="glyphicon glyphicon-ok"></span>
-          </a>
-          <select id="dropdown_poetic_forms" class="form-control input-lg"
-                  onchange="getPoem()">
-            <% @poetic_forms.keys.each do |i| %>
-              <option value="<%= i %>"><%= i %></option>
-            <% end %>
-          </select>
+        <div class="poem_option">
+          <p>Poetic form</p>
+          <span class="tiny_hover_buttons">
+            <a href="#" onclick="randomisePoemOption('#dropdown_poetic_forms')" title="Randomise">!</a>
+            <a href="#" onclick="helpText('help_poetic_forms')" title="Display help">?</a>
+          </span>
+          <div class="input-group btn-block">
+            <a id="poetic_form" title="Toggle" onclick="togglePoemType();"
+                class="input-group-addon btn btn-default btn-lg btn-block btn_tags active">
+              <span id="poetic_form_glyphicon" class="glyphicon glyphicon-ok"></span>
+            </a>
+            <select id="dropdown_poetic_forms" class="form-control input-lg"
+                    onchange="getPoem()">
+              <% @poetic_forms.keys.each do |i| %>
+                <option value="<%= i %>"><%= i %></option>
+              <% end %>
+            </select>
+          </div>
         </div>
         <br>
         <div class="poem_option">
@@ -137,6 +143,248 @@
           <br>
           <p>Project currently <a href="https://github.com/nossidge/poefy_online">in progress</a>.</p>
           <p>Most features are not yet implemented.</p>
+        </div>
+        <div id="help_poetic_forms" class="hidden">
+          <h3>Poetic Forms</h3>
+          <p>help_poetic_forms</p>
+          <p>rondeau</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  aabba aabR aabbaR
+            &nbsp;
+            All night long on the prong of a moss-scallop'd stake,
+            City whom that I have lived and sung in your midst will one day make
+            Glow upon all I have written or shall write, bleeding drops,
+            Nor the place of the tallest and costliest buildings or shops
+            is no fear of mistake,
+            &nbsp;
+            After treading ground and breasting river and lake,
+            whether I sleep or wake;)
+            To plough land in the fall for winter-sown crops,
+            till their color becomes scarlet.
+            &nbsp;
+            Now in a moment I know what I am for, I awake,
+            Earth of the limpid gray of clouds brighter and clearer for my sake!
+            Thy limitless crops, grass, wheat, sugar, oil, corn, rice, hemp, hops,
+            The dispute on the soul stops,
+            A sprig with its flower I break.
+            till their color becomes sca`rlet.
+          </pre>
+          <p>villanelle</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        dickinson
+            Rhyme scheme:  A1bA2 abA1 abA2 abA1 abA2 abA1A2
+            Indentation:   010 001 001 001 001 0011
+            &nbsp;
+            When Richard went to mill;
+            &nbsp;&nbsp;A guest in this stupendous place,
+            And then the streets stood still.
+            &nbsp;
+            And was he confident until
+            Held fast in everlasting race
+            &nbsp;&nbsp;When Richard went to mill;
+            &nbsp;
+            Out of reach of skill,
+            Without design, that I could trace,
+            &nbsp;&nbsp;And then the streets stood still.
+            &nbsp;
+            The hours slid fast, as hours will,
+            A smile suffused Jehovah's face;
+            &nbsp;&nbsp;When Richard went to mill;
+            &nbsp;
+            Our blank in bliss to fill,
+            A face devoid of love or grace,
+            &nbsp;&nbsp;And then the streets stood still.
+            &nbsp;
+            The aster on the hill
+            The heaven we chase
+            &nbsp;&nbsp;When Richard went to mill;
+            &nbsp;&nbsp;And then the streets stood still.
+          </pre>
+          <p>ballade</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  ababbcbC ababbcbC ababbcbC bcbC
+            &nbsp;
+            The swell'd and convuls'd and congested awake to themselves in condition,
+            I say I bring thee Muse to-day and here,
+            Then only may these songs reach fruition.
+            many a long year,
+            daybreak I hear,
+            like a sword,
+            laying the long side-wall, two hundred feet from front to rear,
+            What think you I take my pen in hand to record?
+            &nbsp;
+            Not in my wilful and savage soul's volition,
+            Wicked rather than virtuous out of conformity or fear,
+            Hark, some wild trumpeter, some strange musician,
+            They melt, they disappear.
+            sloops, the raftsman, the pioneer,
+            How all times mischoose the objects of their adulation and reward,
+            A Jew to the Jew he seems, a Russ to the Russ, usual and near,
+            What think you I take my pen in hand to record?
+            &nbsp;
+            Nose, nostrils of the nose, and the partition,
+            I whisper with my lips close to your ear.
+            apparition,
+            (O Mother--O Sisters dear!
+            their drink water, their blood clean and clear,
+            The swing of their axes on the square-hew'd log shaping it toward
+            Now I pierce the darkness, new beings appear,
+            What think you I take my pen in hand to record?
+            &nbsp;
+            by beings like us who walk this sphere,
+            Or I guess it is the handkerchief of the Lord,
+            Have real employments contributed to it? original makers, not mere
+            What think you I take my pen in hand to record?
+          </pre>
+          <p>ballata</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  AbbaA
+            &nbsp;
+            Was the wind piping the pipe of death under the black clouds?
+            And who has been happiest? O I think it is I--I think no one was
+            Or as any law of the earth or any natural production of the earth does.
+            And 'mid its teeming madden'd half-drown'd crowds,
+            Was the wind piping the pipe of death under the black clouds?
+          </pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  AbbaAbbaA
+            &nbsp;
+            the fire.
+            See forts on the shores of harbors, see ships sailing in and out;
+            To diagnose the shifting-delicate tints of love and pride and doubt--
+            Come forward O my soul, and let the rest retire,
+            the fire.
+            All these States compact, every square mile of these States without
+            To jump off in the midst of the sea, rise again, nod to me, shout,
+            Give me for marriage a sweet-breath'd woman of whom I should never tire,
+            the fire.
+          </pre>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  AbbaAbbaAbbaA
+            &nbsp;
+            A windrow-drift of weeds and shells.
+            I see the curious rapid change of the light and shade,
+            Who walk'd with kings with even pace the round world's promenade;
+            I swear I will never henceforth have to do with the faith that tells
+            A windrow-drift of weeds and shells.
+            Enter the captur'd works--yet lo, like a swift-running river they fade,
+            The low hoarse purr of the whirling stone, the light-press'd blade,
+            maddening yells,
+            A windrow-drift of weeds and shells.
+            Stands forever the camp of that dead brigade.
+            poems ever made,
+            O Captain! my Captain! rise up and hear the bells;
+            A windrow-drift of weeds and shells.
+          </pre>
+          <p>sonnet</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        shakespeare
+            Rhyme scheme:  ababcdcdefefgg
+            &nbsp;
+            Love's not Time's fool, though rosy lips and cheeks
+            Dost thou upon thy fading mansion spend?
+            Love alters not with his brief hours and weeks,
+            All losses are restor'd and sorrows end.
+            If the true concord of well-tuned sounds,
+            What merit lived in me, that you should love
+            The wiry concord that mine ear confounds,
+            Askance and strangely; but, by all above,
+            Since sweets and beauties do themselves forsake
+            So, till the judgment that yourself arise,
+            Then of thy beauty do I question make,
+            And says in him thy fair appearance lies.
+            That tongue that tells the story of thy days,
+            Have eyes to wonder, but lack tongues to praise.
+          </pre>
+          <p>petrarchan</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        shakespeare
+            Rhyme scheme:  abbaabbacddcdd
+            Indentation:   10001000100100
+            &nbsp;
+            &nbsp;&nbsp;Whether we are mended, or where better they,
+            And that is this, and this with thee remains.
+            And proud of many, lives upon his gains.
+            And life no longer than thy love will stay,
+            &nbsp;&nbsp;Ere beauty's dead fleece made another gay:
+            The worth of that is that which it contains,
+            Beggared of blood to blush through lively veins?
+            Which by and by black night doth take away,
+            &nbsp;&nbsp;That heavy Saturn laughed and leapt with him.
+            For blunting the fine point of seldom pleasure.
+            Being your vassal, bound to stay your leisure!
+            &nbsp;&nbsp;When proud pied April, dressed in all his trim,
+            But these particulars are not my measure,
+            Mine be thy love and thy love's use their treasure.
+          </pre>
+          <p>limerick</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        spoke
+            Rhyme scheme:  aabba
+            Syllables:      {1:[8],2:[8],3:[4,5],4:[4,5],5:[8]}
+            &nbsp;
+            This meat ist not too over do.
+            You have me done to expect too.
+            The sun lie down.
+            For to see the town.
+            Some pears, and apples, what wilt you?
+          </pre>
+          <p>haiku</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        spoke
+            Rhyme scheme:  abc
+            Syllables:     [5,7,5]
+            &nbsp;
+            A mutton shoulder
+            You not make who to babble.
+            You can take a broth.
+          </pre>
+          <p>common</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        dickinson
+            Rhyme scheme:  abcb
+            Indentation:   0101
+            Syllables:     {o:8,e:6}
+            &nbsp;
+            The dreamy butterflies bestir,
+            &nbsp;&nbsp;For such a foe as this!
+            What is forbidden utterly
+            &nbsp;&nbsp;A mob of solid bliss.
+          </pre>
+          <p>ballad</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        dickinson
+            Rhyme scheme:  abab
+            Indentation:   0101
+            Syllables:     {o:8,e:6}
+            &nbsp;
+            I wonder how the rich may feel, --
+            &nbsp;&nbsp;A fashionless delight
+            Only the keeper of this seal
+            &nbsp;&nbsp;A toad can die of light!
+          </pre>
+          <p>double_dactyl</p>
+          <pre onclick="exampleClick(this)">
+            Corpus:        whitman
+            Rhyme scheme:  abcd efgd
+            Syllables:     {0:6, 4m0:4}
+            Regex:         {7: ^\S+$}
+            &nbsp;
+            I am too full of woe!
+            my immortal heroes,
+            beyond the difference.
+            between your knees,
+            &nbsp;
+            The Dying Veteran
+            Reconciliation
+            Nay he is mine alone;
+            catching disease.
+          </pre>
         </div>
         <div id="help_rhyme" class="hidden">
           <h3>Rhyme scheme</h3>
