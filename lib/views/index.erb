@@ -145,9 +145,11 @@
           <p>Most features are not yet implemented.</p>
         </div>
         <div id="help_poetic_forms" class="hidden">
-          <h3>Poetic Forms</h3>
-          <p>help_poetic_forms</p>
-          <p>rondeau</p>
+          <h3>Poetic Form</h3>
+          <p>Specifies a predefined structure that the poem will follow. This is the most important argument; the whole poem is based on this. 'Rhyme scheme' and 'Poetic form' are mutually exclusive; if one field is selected the other will be automatically deselected.</p>
+          <p>It will always include a Rhyme Scheme, and may also consist of any other input variables, such as Indentation, Syllable, or Regex.</p>
+          <p>Below, you can see examples of the Poetic Forms, along with the specifications for each.</p>
+          <h3>Rondeau</h3>
           <pre onclick="exampleClick(this)">
             Corpus:        whitman
             Rhyme scheme:  aabba aabR aabbaR
@@ -170,7 +172,7 @@
             A sprig with its flower I break.
             till their color becomes sca`rlet.
           </pre>
-          <p>villanelle</p>
+          <h3>Villanelle</h3>
           <pre onclick="exampleClick(this)">
             Corpus:        dickinson
             Rhyme scheme:  A1bA2 abA1 abA2 abA1 abA2 abA1A2
@@ -201,7 +203,7 @@
             &nbsp;&nbsp;When Richard went to mill;
             &nbsp;&nbsp;And then the streets stood still.
           </pre>
-          <p>ballade</p>
+          <h3>Ballade</h3>
           <pre onclick="exampleClick(this)">
             Corpus:        whitman
             Rhyme scheme:  ababbcbC ababbcbC ababbcbC bcbC
@@ -238,7 +240,8 @@
             Have real employments contributed to it? original makers, not mere
             What think you I take my pen in hand to record?
           </pre>
-          <p>ballata</p>
+          <h3>Ballata</h3>
+          <p>The length is flexible, one will randomly be selected from the following:</p>
           <pre onclick="exampleClick(this)">
             Corpus:        whitman
             Rhyme scheme:  AbbaA
@@ -281,7 +284,8 @@
             O Captain! my Captain! rise up and hear the bells;
             A windrow-drift of weeds and shells.
           </pre>
-          <p>sonnet</p>
+          <h3>Sonnet</h3>
+          <p>The Shakespearean sonnet form, consisting of three quatrains and a couplet.</p>
           <pre onclick="exampleClick(this)">
             Corpus:        shakespeare
             Rhyme scheme:  ababcdcdefefgg
@@ -301,7 +305,17 @@
             That tongue that tells the story of thy days,
             Have eyes to wonder, but lack tongues to praise.
           </pre>
-          <p>petrarchan</p>
+          <h3>Petrarchan</h3>
+          <p>The Petrarchan sonnet form, consisting of an octave and a sestet. The rhyme scheme for the sestet is flexible, and one will randomly be selected from the following:
+            <ul>
+              <li>abbaabba<strong>cdecde</strong></li>
+              <li>abbaabba<strong>cdccdc</strong></li>
+              <li>abbaabba<strong>cdcddc</strong></li>
+              <li>abbaabba<strong>cddcdd</strong></li>
+              <li>abbaabba<strong>cddece</strong></li>
+              <li>abbaabba<strong>cdcdcd</strong></li>
+            </ul>
+          </p>
           <pre onclick="exampleClick(this)">
             Corpus:        shakespeare
             Rhyme scheme:  abbaabbacddcdd
@@ -322,7 +336,7 @@
             But these particulars are not my measure,
             Mine be thy love and thy love's use their treasure.
           </pre>
-          <p>limerick</p>
+          <h3>Limerick</h3>
           <pre onclick="exampleClick(this)">
             Corpus:        spoke
             Rhyme scheme:  aabba
@@ -334,7 +348,7 @@
             For to see the town.
             Some pears, and apples, what wilt you?
           </pre>
-          <p>haiku</p>
+          <h3>Haiku</h3>
           <pre onclick="exampleClick(this)">
             Corpus:        spoke
             Rhyme scheme:  abc
@@ -344,7 +358,7 @@
             You not make who to babble.
             You can take a broth.
           </pre>
-          <p>common</p>
+          <h3>Common</h3>
           <pre onclick="exampleClick(this)">
             Corpus:        dickinson
             Rhyme scheme:  abcb
@@ -356,7 +370,8 @@
             What is forbidden utterly
             &nbsp;&nbsp;A mob of solid bliss.
           </pre>
-          <p>ballad</p>
+          <h3>Ballad</h3>
+          <p>Similar to the common metre, but with rhyming first and third lines.</p>
           <pre onclick="exampleClick(this)">
             Corpus:        dickinson
             Rhyme scheme:  abab
@@ -368,7 +383,8 @@
             Only the keeper of this seal
             &nbsp;&nbsp;A toad can die of light!
           </pre>
-          <p>double_dactyl</p>
+          <h3>Double Dactyl</h3>
+          <p>The regex in this specification ensures that the second line of the second stanza always consists of just one word.</p>
           <pre onclick="exampleClick(this)">
             Corpus:        whitman
             Rhyme scheme:  abcd efgd
@@ -388,7 +404,7 @@
         </div>
         <div id="help_rhyme" class="hidden">
           <h3>Rhyme scheme</h3>
-          <p>Specifies a rhyme structure that the poem must follow. This is the most important argument; the whole poem is based on this. 'Rhyme scheme' and 'Poetic form' are mutually exclusive; if one field is selected the other will be automatically deselected.</p>
+          <p>Specifies a rhyme structure that the poem will follow. This is the most important argument; the whole poem is based on this. 'Rhyme scheme' and 'Poetic form' are mutually exclusive; if one field is selected the other will be automatically deselected.</p>
           <p>Each token in the rhyme string represents a line in the poem. Letters indicate rhymes, so all 'a' or 'A' lines have the same rhyme.</p>
           <p>Example, sonnet:</p>
           <pre onclick="exampleClick(this)">
