@@ -101,7 +101,7 @@ module PoefyOnline
       if capital
         options[:transform] = proc do |line|
           regex = /[a-zA-Z]/
-          line[regex] = line[regex].upcase
+          line[regex] = line[regex].upcase if line[regex]
           line
         end
       end
