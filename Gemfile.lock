@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     poefy_online (0.0.1.pre)
-      poefy (~> 1.0, >= 1.0.0)
-      poefy-pg (~> 0.1, >= 0.1.0)
+      poefy (~> 1.1, >= 1.1.1)
+      poefy-pg (~> 1.1, >= 1.1.0)
       sinatra (~> 2.0, >= 2.0.0)
 
 GEM
@@ -11,17 +11,17 @@ GEM
   specs:
     conditional_sample (1.0.0)
     diff-lcs (1.3)
-    humanize (1.4.0)
+    humanize (1.5.0)
     mustermann (1.0.1)
     pg (0.21.0-x86-mingw32)
-    poefy (1.0.0)
+    poefy (1.1.1)
       conditional_sample (~> 1.0, >= 1.0.0)
       humanize (~> 1.4, >= 1.4.0)
       ruby_rhymes (~> 0.1, >= 0.1.2)
       wordfilter (~> 0.2, >= 0.2.6)
-    poefy-pg (0.1.0)
+    poefy-pg (1.1.0)
       pg (~> 0.21, >= 0.21.0)
-      poefy (~> 1.0, >= 1.0.0)
+      poefy (~> 1.1, >= 1.1.0)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack

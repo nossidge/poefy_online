@@ -13,34 +13,12 @@ require 'poefy/pg'
 
 ################################################################################
 
-# Extend the Poefy::Database postgres connection.
+# Alter the Poefy::Database postgres connection.
 module Poefy
   class Database
-
-    # Details for the database connection.
     def self.connection
       PG.connect( ENV['DATABASE_URL'] )
     end
-
-    # Open a class-wide connection, execute a query.
-    def self.single_exec! sql, sql_args = nil
-      output = nil
-      begin
-        @@con ||= Database::connection
-        output = if sql_args
-          @@con.exec(sql, [*sql_args]).values
-        else
-          @@con.exec(sql).values
-        end
-      end
-      output
-    end
-
-    # Open a connection to the database.
-    def open_connection
-      @db ||= Database::connection
-    end
-
   end
 end
 
