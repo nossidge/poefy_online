@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
  <head>
-  <meta charset="UTF-8"></meta>
+  <meta charset="UTF-8">
   <title>Poefy Online</title>
   <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
-  <script language="javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script language="javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script language="javascript" src="poefy.js"></script>
-  <script language="javascript">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="poefy.js"></script>
+  <script>
     var welcomeText;
     var desc_databases = <%= @desc_databases.to_json %>;
     var poetic_forms   = <%= @poetic_forms.to_json %>;
@@ -150,7 +150,7 @@
         <br>
       </div>
     </div>
-    <div id="col_middle" class="col_middle border" name="poem_frame">
+    <div id="col_middle" class="col_middle border">
       <div id="poem_results">
         <div id="welcome_text" class="hidden">
           <p>Welcome to the online <a href="https://github.com/nossidge/poefy">Poefy</a> generator.</p>
@@ -358,16 +358,15 @@
             </pre>
           </div>
           <h3>Petrarchan</h3>
-          <p>The Petrarchan sonnet form, consisting of an octave and a sestet. The rhyme scheme for the sestet is flexible, and one will randomly be selected from the following:
-            <ul>
-              <li>abbaabba<strong>cdecde</strong></li>
-              <li>abbaabba<strong>cdccdc</strong></li>
-              <li>abbaabba<strong>cdcddc</strong></li>
-              <li>abbaabba<strong>cddcdd</strong></li>
-              <li>abbaabba<strong>cddece</strong></li>
-              <li>abbaabba<strong>cdcdcd</strong></li>
-            </ul>
-          </p>
+          <p>The Petrarchan sonnet form, consisting of an octave and a sestet. The rhyme scheme for the sestet is flexible, and one will randomly be selected from the following:</p>
+          <ul>
+            <li>abbaabba<strong>cdecde</strong></li>
+            <li>abbaabba<strong>cdccdc</strong></li>
+            <li>abbaabba<strong>cdcddc</strong></li>
+            <li>abbaabba<strong>cddcdd</strong></li>
+            <li>abbaabba<strong>cddece</strong></li>
+            <li>abbaabba<strong>cdcdcd</strong></li>
+          </ul>
           <div onclick="exampleClick(this)">
             <div class="info_div" title="Click me!">
               <span class="glyphicon glyphicon-info-sign"></span>
