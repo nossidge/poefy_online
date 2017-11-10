@@ -151,3 +151,19 @@ input {
 }
 
 /*############################################################################*/
+
+/* Float an info div at the top right of a container */
+.info_div {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  float: right;
+  font-size: 120%;
+  margin-left: -200px;
+  padding-right: 30px;
+  margin-top: 10px;
+  color: rgb(85,85,85);
+  z-index: 10;
+}
+
+/*############################################################################*/
