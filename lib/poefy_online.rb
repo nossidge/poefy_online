@@ -106,7 +106,8 @@ module PoefyOnline
       syllable  = params['syllable']
       regex     = params['regex']
       acrostic  = params['acrostic']
-      transform = params['transform']
+      proper    = !!params['proper']
+      capital   = !!params['capital']
 
       # Create options hash.
       options = {}
@@ -116,12 +117,30 @@ module PoefyOnline
       options[:syllable]  = syllable  if syllable
       options[:regex]     = regex     if regex
       options[:acrostic]  = acrostic  if acrostic
-      options[:transform] = transform if transform
+      options[:proper]    = proper
+
+      # Add the capitalisation transfom.
+      if capital
+        options[:transform] = proc do |line|
+          regex = /[a-zA-Z]/
+          line[regex] = line[regex].upcase
+          line
+        end
+      end
+
+      # Create a new Poefy::Poem object.
+      poefy = Poefy::Poem.new(corpus)
+
+      # Create a poem and catch any errors.
+      poem = begin
+        poefy.poem(options)
+      rescue Poefy::Error => e
+        [e.exception]
+      ensure
+        poefy.close
+      end
 
       # Return poem as a JSON object.
-      poefy = Poefy::Poem.new(corpus, options)
-      poem = poefy.poem
-      poefy.close
       JSON (poem || [])
     end
 
