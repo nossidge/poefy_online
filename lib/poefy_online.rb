@@ -106,20 +106,30 @@ module PoefyOnline
         end
       end
 
+      # Create a hash for the output.
+      output = {
+        error: nil,
+        poem: []
+      }
+
       # Create a new Poefy::Poem object.
       poefy = Poefy::Poem.new(corpus)
 
       # Create a poem and catch any errors.
-      poem = begin
-        poefy.poem(options)
-      rescue Poefy::Error => e
-        [e.exception]
+      begin
+        poem = poefy.poem(options)
+        output[:poem] = poem
+      rescue => e
+        output[:error] = {
+          type: e.class,
+          text: e.exception
+        }
       ensure
         poefy.close
       end
 
-      # Return poem as a JSON object.
-      JSON (poem || [])
+      # Return output as a JSON object.
+      JSON output
     end
 
   end
